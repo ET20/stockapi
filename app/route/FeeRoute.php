@@ -1,14 +1,9 @@
 <?php
 use App\Model\FeeModel;
 
-$app->group('/fee', function () {
-    
-    //$this->get('test', function ($req, $res, $args) {
-    //    return $res->getBody()
-    //               ->write('Hello Users');
-    //});
-    
-    $this->get('/all', function ($req, $res, $args) {
+$app->group('/fees', function () {
+
+    $this->get('', function ($req, $res, $args) {
         $um = new FeeModel();
         
         $res
@@ -44,7 +39,7 @@ $app->group('/fee', function () {
         );
     });
 
-     $this->get('/bymember/{id}', function ($req, $res, $args) {
+     $this->get('/members/{id}', function ($req, $res, $args) {
         $um = new FeeModel();
         
         $res
@@ -62,7 +57,7 @@ $app->group('/fee', function () {
         );
     });
 
-    $this->post('/save', function ($req, $res) {
+    $this->post('', function ($req, $res) {
         $um = new FeeModel();
         
         $res
@@ -81,7 +76,7 @@ $app->group('/fee', function () {
         );
     });
 
-    $this->post('/CreateByMembers', function ($req, $res) {
+    $this->post('/bulk', function ($req, $res) {
         $um = new FeeModel();
         
         $res
@@ -100,7 +95,7 @@ $app->group('/fee', function () {
         );
     });
 
-    $this->post('/RegisterPay', function ($req, $res) {
+    $this->put('/put', function ($req, $res) {
         $um = new FeeModel();
         
         $res
@@ -119,7 +114,7 @@ $app->group('/fee', function () {
         );
     });
     
-    $this->delete('/delete/{id}', function ($req, $res, $args) {
+    $this->delete('/{id}', function ($req, $res, $args) {
         $um = new FeeModel();
         
         $res

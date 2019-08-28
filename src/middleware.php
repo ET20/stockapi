@@ -7,9 +7,19 @@
 //ignore works well
 
 $app->add(new Tuupola\Middleware\JwtAuthentication([
-  //"path" => "/public/", /* or ["/api", "/admin"] */
-  "ignore" => "/",
-  "secure" => false,
-  //"relaxed" => ["localhost", "dev.example.com"],
-  "secret" => "supersecretkeyyoushouldnotcommittogithub"
+    "path" => "/api/",
+    "ignore" => ["/public/users/login", "/public/users/register"],
+    "attribute" => "decoded_token_data",
+    //"secure" => false,
+    "header" => "olivia",
+    //"relaxed" => ["localhost", "dev.example.com"],
+    "secret" => "unsecretoquenotevoyacontar",
+    "algorithm" => ["HS256"],
+    "error" => function ($response, $arguments) {
+        $data["status"] = "error";
+        $data["message"] = $arguments["message"];
+        return $response
+            ->withHeader("Content-Type", "application/json")
+            ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    },
 ]));

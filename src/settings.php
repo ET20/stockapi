@@ -13,5 +13,10 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
         ],
+        
+        // jwt settings
+        "jwt" => [
+            'secret' => 'unsecretoquenotevoyacontar'
+        ]
     ],
 ];
