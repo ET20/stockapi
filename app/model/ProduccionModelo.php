@@ -4,9 +4,10 @@ namespace App\Model;
 use App\Lib\Database;
 use App\Lib\Response;
 
-class FamilyModel {
+class ProduccionModelo { //Nombre de la clase
     private $db;
-    private $membertbl = 'member';
+    private $membertbl = 'produccion';
+    private $tabla = 'produccion';
     private $familygrouptbl = 'familygroup';
     private $relationshiptbl = 'memberrelationship';
     private $response;
@@ -21,49 +22,13 @@ class FamilyModel {
             $result = array();
 
             $stm = $this->db->prepare(
-                "SELECT DISTINCT
-                    m.*
-                FROM $this->membertbl m
-                    JOIN familygroup fg ON m.idmember = fg.parentmember");
+                "SELECT *
+                FROM $this->tabla");
 
             $stm->execute();
 
             $this->response->setResponse(true);
             $this->response->result = $stm->fetchAll();
-
-            foreach ($this->response->result as $key => $value) {
-                $stmgenero = $this->db->prepare(
-                    "SELECT
-                        gender.idgender,
-                        gender.gendername,
-                        gender.genderdesc,
-                        gender.gendericon
-                    FROM member
-                        JOIN gender on member.gender = gender.idgender
-                    WHERE member.idmember = ?;
-                ");
-                $stmgenero->execute(
-                    array(
-                        $value->idmember,
-                    )
-                );
-                $value->gender = $stmgenero->fetch();
-
-                $stmfamily = $this->db->prepare(
-                    "SELECT member.*, familygroup.relationship, memberrelationship.relation
-                    FROM member
-                        JOIN familygroup ON member.idmember = familygroup.childmember
-                        LEFT JOIN memberrelationship ON familygroup.relationship = memberrelationship.idmemberrelationship
-                    WHERE familygroup.parentmember = ? AND familygroup.deleted is not true;
-                ");
-                $stmfamily->execute(
-                    array(
-                        $value->idmember,
-                    )
-                );
-                $value->family = $stmfamily->fetchAll();
-
-            }
 
             return $this->response;
         } catch (Exception $e) {

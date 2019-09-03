@@ -3,7 +3,7 @@ $base = __DIR__ . '/../app/';
 
 $folders = [
     'lib',
-    'model',
+    'produccion',
     'route',
 ];
 

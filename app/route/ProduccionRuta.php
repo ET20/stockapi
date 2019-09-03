@@ -1,10 +1,10 @@
 <?php
-use App\Model\FamilyModel;
+use App\Model\ProduccionModelo;
 
-$app->group('/families', function () {
+$app->group('/produccion', function () {
 
-    $this->get('', function ($req, $res, $args) {
-        $um = new FamilyModel();
+    $this->get('/todo', function ($req, $res, $args) {
+        $um = new ProduccionModelo();
 
         $res
             ->getBody()
@@ -22,7 +22,7 @@ $app->group('/families', function () {
     });
 
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         $res
             ->getBody()
@@ -39,7 +39,7 @@ $app->group('/families', function () {
     });
 
     $this->get('/tree/{id}', function ($req, $res, $args) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         $res
             ->getBody()
@@ -56,7 +56,7 @@ $app->group('/families', function () {
     });
 
     $this->post('', function ($req, $res) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -74,7 +74,7 @@ $app->group('/families', function () {
     });
 
     $this->put('', function ($req, $res) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -92,7 +92,7 @@ $app->group('/families', function () {
     });
 
     $this->delete('', function ($req, $res) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
