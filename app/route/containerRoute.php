@@ -1,10 +1,10 @@
  <?php
-/*use App\Model\containerModel;
+/*use App\Model\ContainerModel;
 
 $app->group('/envase', function () {
 
     $this->get('/todo', function ($req, $res, $args) {
-        $modelo = new containerModel();
+        $modelo = new ContainerModel();
 
         $res
             ->getBody()
@@ -22,7 +22,7 @@ $app->group('/envase', function () {
     });
     
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new containerModel();
+        $um = new ContainerModel();
 
         $res
             ->getBody()
