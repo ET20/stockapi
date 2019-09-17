@@ -1,34 +1,39 @@
 <?php
 namespace App\Model;
 
-use App\Lib\Database;
-use App\Lib\Response;
+use App\Lib\Database; //Importamos el archivo que conecta a la base de datos
+use App\Lib\response; //Importamos el archivo que arma la respuesta
 
-class ProduccionModelo { //Nombre de la clase
+class ProductionModel { //Nombre de la clase
     private $db;
-    private $membertbl = 'produccion';
-    private $tabla = 'produccion';
-    private $familygrouptbl = 'familygroup';
-    private $relationshiptbl = 'memberrelationship';
+    private $production = 'produccion';
     private $response;
 
+    //Construimos la clase ProduccionModelo
     public function __CONSTRUCT() {
         $this->db = Database::StartUp();
         $this->response = new Response();
     }
 
+    //Función que recupera todos los item de Produccion
     public function GetAll() {
         try {
-            $result = array();
 
+            //Consulta SQL que ejecutaremos
             $stm = $this->db->prepare(
-                "SELECT *
-                FROM $this->tabla");
+                "SELECT 
+                    * 
+                FROM 
+                    $this->production"
+            );
 
-            $stm->execute();
+            $stm->execute(); // Ejecutamos la consulta
 
+            //Habilitamos la respuesta en modo "OK"
             $this->response->setResponse(true);
-            $this->response->result = $stm->fetchAll();
+            
+            //En el resultado, almacenamos la lista de resultados recuperados por la consulta
+            $this->response->result = $stm->fetchAll(); 
 
             return $this->response;
         } catch (Exception $e) {
