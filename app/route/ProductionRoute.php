@@ -1,10 +1,10 @@
 <?php
-use App\Model\ProduccionModelo;
+use App\Model\ProductionModel;
 
 $app->group('/produccion', function () {
 
     $this->get('/todo', function ($req, $res, $args) {
-        $um = new ProduccionModelo();
+        $um = new ProductionModel();
 
         $res
             ->getBody()
@@ -22,7 +22,7 @@ $app->group('/produccion', function () {
     });
 
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new Familyproduccion();
+        $um = new ProductionModel();
 
         $res
             ->getBody()
