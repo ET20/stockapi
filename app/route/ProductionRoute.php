@@ -4,13 +4,13 @@ use App\Model\ProductionModel;
 $app->group('/produccion', function () {
 
     $this->get('/todo', function ($req, $res, $args) {
-        $um = new ProductionModel();
+        $modelo = new ProductionModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetAll()
+                    $modelo->GetAll() // Qué función usaré de mi modelo
                 )
             );
 

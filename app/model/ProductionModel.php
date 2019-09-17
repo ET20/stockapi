@@ -1,8 +1,8 @@
 <?php
-namespace App\Model;
+namespace App\Model; //Donde estamos
 
 use App\Lib\Database; //Importamos el archivo que conecta a la base de datos
-use App\Lib\response; //Importamos el archivo que arma la respuesta
+use App\Lib\Response; //Importamos el archivo que arma la respuesta
 
 class ProductionModel { //Nombre de la clase
     private $db;
@@ -20,11 +20,19 @@ class ProductionModel { //Nombre de la clase
         try {
 
             //Consulta SQL que ejecutaremos
+            //statement = consulta = consulta
             $stm = $this->db->prepare(
-                "SELECT 
-                    * 
-                FROM 
-                    $this->production"
+                "select
+                    p.*,
+                    m.nombre,
+                    m.descripcion,
+                    m.cantidad,
+                    m.unidad,
+                    m.buenestado
+                from produccion p
+                join material m
+                on m.idmaterial = p.idmaterial
+                "
             );
 
             $stm->execute(); // Ejecutamos la consulta

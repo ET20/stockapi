@@ -1,5 +1,7 @@
 
 <?php
+/* NO MODIFICAR */
+
 $base = __DIR__ . '/../app/';
 
 $folders = [
