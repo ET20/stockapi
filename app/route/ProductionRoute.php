@@ -1,16 +1,16 @@
 <?php
 use App\Model\ProductionModel;
 
-$app->group('/produccion', function () {
+$app->group('/production', function () {
 
-    $this->get('/todo', function ($req, $res, $args) {
+    $this->get('/all', function ($req, $res, $args) {
         $modelo = new ProductionModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $modelo->GetAll() // Qué función usaré de mi modelo
+                    $modelo->GetAllProduction() // Qué función usaré de mi modelo
                 )
             );
 

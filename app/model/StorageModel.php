@@ -1,5 +1,5 @@
 <?php
-namespace App\Model; //Donde estamos
+namespace App\Model; 
 
 use App\Lib\Database; 
 use App\Lib\Response;
@@ -8,7 +8,7 @@ class StorageModel {
     private $db;
     private $stro = 'almacen';
     private $ta = "tipoalmacen";
-    private $response;
+    private $response;  
     public function __CONSTRUCT() {
         $this->db = Database::StartUp();
         $this->response = new Response();

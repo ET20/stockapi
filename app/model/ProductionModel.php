@@ -16,7 +16,7 @@ class ProductionModel { //Nombre de la clase
     }
 
     //Función que recupera todos los item de Produccion
-    public function GetAll() {
+    public function GetAllProduction() {
         try {
 
             //Consulta SQL que ejecutaremos
@@ -35,13 +35,9 @@ class ProductionModel { //Nombre de la clase
                 "
             );
 
-            $stm->execute(); // Ejecutamos la consulta
-
-            //Habilitamos la respuesta en modo "OK"
+            $stm->execute(); 
             $this->response->setResponse(true);
-            
-            //En el resultado, almacenamos la lista de resultados recuperados por la consulta
-            $this->response->result = $stm->fetchAll(); 
+            $this->response->result_production_tools = $stm->fetchAll(); 
 
             return $this->response;
         } catch (Exception $e) {
