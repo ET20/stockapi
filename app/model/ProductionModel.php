@@ -21,24 +21,18 @@ class ProductionModel { //Nombre de la clase
 
             //Consulta SQL que ejecutaremos
             //statement = consulta = consulta
-            $stm = $this->db->prepare(
+            $stmp = $this->db->prepare(
                 "select
-                    p.*,
-                    m.nombre,
-                    m.descripcion,
-                    m.cantidad,
-                    m.unidad,
-                    m.buenestado
-                from produccion p
-                join material m
-                on m.idmaterial = p.idmaterial
-                "
+                p.idproduccion ,p.idmaterial,p.lote,p.fechayhoradelaproduccion, m.nombre,m.cantidad,m.cantidad,m.buenestado,m.unidad,um.nombre Nombre_UN
+                from
+                produccion p
+                join material m on p.idmaterial = m.idmaterial
+                join unidadmedida um on m.unidad = um.idunidadmedida
+                "   
             );
-
-            $stm->execute(); 
+            $stmp->execute(); 
             $this->response->setResponse(true);
-            $this->response->result_production_tools = $stm->fetchAll(); 
-
+            $this->response->result_production = $stmp->fetchAll();
             return $this->response;
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
@@ -46,124 +40,6 @@ class ProductionModel { //Nombre de la clase
         }
     }
 
-    /* Get family by parent id */
-    public function GetByMember($id) {
-        try
-        {
-            $result = array();
-
-            $stm = $this->db->prepare(
-                "SELECT 
-                    *
-                FROM
-                    familygroup
-                WHERE
-                    parentmember = (SELECT 
-                            parentmember
-                        FROM
-                            familygroup
-                        WHERE
-                            childmember = ?)
-                ORDER BY relationship asc");
-            $stm->execute(array($id));
-
-            $this->response->setResponse(true);
-            $this->response->result = $stm->fetchAll();
-
-            foreach ($this->response->result as $key => $value) {
-                $stmrelation = $this->db->prepare(
-                    "SELECT 
-                        *
-                    FROM
-                        $this->relationshiptbl
-                    WHERE
-                        idmemberrelationship = ?");
-                $stmrelation->execute(array($value->relationship));
-                $value->relationship = $stmrelation->fetch();
-
-                $stmchilds = $this->db->prepare(
-                    "SELECT 
-                        *
-                    FROM
-                        member
-                    WHERE
-                        idmember = ?");
-                $stmchilds->execute(array($value->childmember));
-                $value->childmember = $stmchilds->fetch();
-            
-            }
-
-            return $this->response;
-        } catch (Exception $e) {
-            $this->response->setResponse(false, $e->getMessage());
-            return $this->response;
-        }
-    }
-
-     public function GetTree($id) {
-        try
-        {
-            $result = array();
-
-            $stm = $this->db->prepare(
-                "SELECT 
-                    *
-                FROM
-                    member
-                WHERE
-                    idmember = (SELECT 
-                            parentmember
-                        FROM
-                            familygroup
-                        WHERE
-                            childmember = ?)");
-            $stm->execute(array($id));
-
-            $this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
-
-            $stm2 = $this->db->prepare(
-                "SELECT 
-                    childmember, relationship, datetime, deleted
-                FROM
-                    familygroup
-                WHERE
-                    parentmember = ?
-                    and childmember != ?");
-            $stm2->execute(array($this->response->result->idmember,$this->response->result->idmember));
-
-            $this->response->setResponse(true);
-            $this->response->result->childs = $stm2->fetchAll();
-
-            foreach ($this->response->result->childs as $key => $value) {
-                $stmrelation = $this->db->prepare(
-                    "SELECT 
-                        *
-                    FROM
-                        $this->relationshiptbl
-                    WHERE
-                        idmemberrelationship = ?");
-                $stmrelation->execute(array($value->relationship));
-                $value->relationship = $stmrelation->fetch();
-
-                $stmchilds = $this->db->prepare(
-                    "SELECT 
-                        *
-                    FROM
-                        member
-                    WHERE
-                        idmember = ?");
-                $stmchilds->execute(array($value->childmember));
-                $value->childmember = $stmchilds->fetch();
-            
-            }
-
-            return $this->response;
-        } catch (Exception $e) {
-            $this->response->setResponse(false, $e->getMessage());
-            return $this->response;
-        }
-    }
 
     public function Get($id)
     {
@@ -293,30 +169,7 @@ class ProductionModel { //Nombre de la clase
         }
     }
 
-    public function FlagDelete($data)
-    {
-        try
-        {
-            $sql = "UPDATE $this->familygrouptbl
-            SET
-                deleted = true,
-                datetime = (select now())
-            WHERE (childmember = ?) and (parentmember = ?)";
 
-            $this->db->prepare($sql)
-                ->execute(
-                    array(
-                        $data['childmember'],
-                        $data['parentmember'],
-                    )
-                );
-
-            $this->response->setResponse(true);
-            return $this->response;
-        } catch (Exception $e) {
-            $this->response->setResponse(false, $e->getMessage());
-        }
-    }
 
     public function Delete($data)
     {

@@ -28,7 +28,7 @@ $app->group('/production', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetByMember($args['id'])
+                    $um->Get($args['id'])
                 )
             );
         return $res->withHeader(
