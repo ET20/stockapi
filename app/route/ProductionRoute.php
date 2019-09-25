@@ -1,7 +1,7 @@
 <?php
 use App\Model\ProductionModel;
-
-$app->group('/production', function () {
+//llamar como productions
+$app->group('/productions', function () {
 
     $this->get('/all', function ($req, $res, $args) {
         $modelo = new ProductionModel();
