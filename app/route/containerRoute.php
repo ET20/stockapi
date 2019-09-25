@@ -36,5 +36,58 @@ $app->group('/envase', function () {
         );
 
     });
+    $this->post('', function ($req, $res) {
+        $um = new containerModel();
 
-}); 
+        return $res
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->withHeader('Content-type', 'application/json')
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Insert(
+                        $req->getParsedBody()
+                    )
+                )
+            );
+    });
+    $this->put('', function ($req, $res) {
+        $um = new containerModel();
+
+        return $res
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->withHeader('Content-type', 'application/json')
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Update(
+                        $req->getParsedBody()
+                    )
+                )
+            );
+    });
+    $this->delete('', function ($req, $res) {
+        $um = new containerModel();
+
+        return $res
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->withHeader('Content-type', 'application/json')
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Delete(
+                        $req->getParsedBody()
+                    )
+                )
+            );
+
+    });
+});
+
+

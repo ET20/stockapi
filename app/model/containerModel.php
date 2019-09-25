@@ -73,6 +73,75 @@ class ContainerModel { //Nombre de la clase
 
 
     }
+    public function Insert($data)
+    {
+        try
+        {
+            $sql = "INSERT INTO $this->envase
+                (idenvase, idmaterial, capacidad, datetime)
+                VALUES (?,?,?,(select now()))";
+
+            $this->db->prepare($sql)
+                ->execute(
+                    array(
+                        $data['idenvase'],
+                        $data['idmaterial'],
+                        $data['capacidad'],
+                    )
+                );
+
+            $this->response->setResponse(true);
+            return $this->response;
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+    public function Update($data)
+    {
+        try
+        {
+            $sql = "UPDATE $this->envase
+            SET
+                relationship = ?,
+                datetime = (select now())
+            WHERE (idenvase = ?) and (idmaterial = ?)";
+
+            $this->db->prepare($sql)
+                ->execute(
+                    array(
+                        $data['relationship'],
+                        $data['idenvase'],
+                        $data['idmaterial'],
+                    )
+                );
+
+            $this->response->setResponse(true);
+            return $this->response;
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+    public function Delete($data)
+    {
+		try 
+		{
+			$stm = $this->db
+			            ->prepare("DELETE FROM $this->familygrouptbl WHERE (idenvase = ?) and (idmaterial = ?)");			          
+
+			$stm->execute(
+                array(
+                        $data['idenvase'],
+                        $data['idmaterial'],
+                    ));
+            
+			$this->response->setResponse(true);
+            return $this->response;
+		} catch (Exception $e) 
+		{
+			$this->response->setResponse(false, $e->getMessage());
+		}
+    }
+
 
 }
 
