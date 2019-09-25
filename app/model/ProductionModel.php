@@ -22,7 +22,7 @@ class ProductionModel { //Nombre de la clase
             //statement = consulta = consulta
             $stmp = $this->db->prepare(
                 "select
-                p.idproduccion ,p.idmaterial,p.lote,p.fechayhoradelaproduccion, m.nombre,m.cantidad,m.cantidad,m.buenestado,m.unidad,um.nombre Nombre_UN
+                p.idproduccion ,p.idmaterial,m.nombre,p.lote,p.fechayhoradelaproduccion,m.cantidad,m.cantidad,m.buenestado,m.unidad,um.nombre Nombre_UN
                 from
                 produccion p
                 join material m on p.idmaterial = m.idmaterial
@@ -38,7 +38,7 @@ class ProductionModel { //Nombre de la clase
             return $this->response;
         }
     }
-//probando
+
 
     public function Get($id)
     {
@@ -49,8 +49,8 @@ class ProductionModel { //Nombre de la clase
             $stm = $this->db->prepare(
                 "SELECT DISTINCT
                     m.*
-                FROM $this->membertbl m
-                    JOIN familygroup fg ON m.idmember = fg.parentmember
+                FROM  material m
+                    JOIN produccion p ON m.idmaterial = p.idproduccion
                 WHERE m.idmember = ?");
             $stm->execute(array($id));
 
