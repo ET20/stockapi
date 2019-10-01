@@ -4,7 +4,7 @@ namespace App\Model; //Donde estamos
 use App\Lib\Database; //Importamos el archivo que conecta a la base de datos
 use App\Lib\Response; //Importamos el archivo que arma la respuesta
 
-//hola
+//corregi los errores con las c minusculas
 class ContainerModel { //Nombre de la clase
     private $db;
     private $container = 'envase';

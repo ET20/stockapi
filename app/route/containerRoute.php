@@ -1,6 +1,8 @@
  <?php
 /*use App\Model\ContainerModel;
 
+//corregi los errores con las c minusculas
+
 $app->group('/envase', function () {
 
     $this->get('/todo', function ($req, $res, $args) {
