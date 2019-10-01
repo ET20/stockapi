@@ -3,11 +3,13 @@ namespace App\Model;
 
 use App\Lib\Database;
 use App\Lib\Response;
+use App\Model\ToolModel;
 
 class ToolModel
-{
+{ 
     private $db;
-    private $tool = 'herramienta';
+    private $tooltbl = 'herramienta';
+    private $materialtbl = 'material';
     private $response;
 
     public function __CONSTRUCT()
@@ -16,65 +18,50 @@ class ToolModel
         $this->response = new Response();
     }
 
-    
-    public function GetAll(){
-        
-        try {        
-        
-                 $result = array();
-
+    /*Get all members */
+    public function GetAll()
+    {
+        try {
+           
                 $stm = $this->db->prepare(
-
-                    "SELECT
-                     FROM herramienta");
-
-                $stm->execute(array($id,)
-                );
-                $stmchilds->execute(array($value->childmember));
-                $value->gender = $stmgenero->fetch();
+                    "SELECT                        
+                   * FROM herramienta"
                     
-            return $this->response;
+                    );
 
-            }        
+                $stm->execute();  
 
-            catch (Exception $e) {
+                $this->response->setResponse(true);
 
+            $this->response->result = $stm->fetchAll();
+            
+            return $this->response;  
+            
+            
+
+            
+            
+        } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
-
-                }
-        }
-    
+            }
+    }
 
     /**/
     public function Get($id)
     {
         try
         {
-            $result = array();
-
-            $stm = $this->db->prepare("SELECT * FROM $this->membertbl WHERE idmember = ?");
+           
+            $stm = $this->db->prepare("SELECT * FROM $this->tooltbl 
+            JOIN $this->materialtbl
+            ON herramienta.idmaterial = material.idmaterial
+            WHERE idherramienta = ?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
 
-            $stmgenero = $this->db->prepare(
-                "SELECT
-                    gender.idgender,
-                    gender.gendername,
-                    gender.genderdesc,
-                    gender.gendericon
-                FROM member
-                    JOIN gender on member.gender = gender.idgender
-                WHERE member.idmember = ?;
-            ");
-            $stmgenero->execute(
-                array(
-                    $this->response->result->idmember,
-                )
-            );
-            $this->response->result->gender = $stmgenero->fetch();
+            $this->response->result = $stm->fetch();            
 
             return $this->response;
         } catch (Exception $e) {
