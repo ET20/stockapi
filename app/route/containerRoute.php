@@ -1,28 +1,11 @@
-<?php
-use App\Model\ProductionModel;
-//llamar como productions
-$app->group('/productions', function () {
+ <?php
+use App\Model\ContainerModel;
 
-    $this->get('/all', function ($req, $res, $args) {
-        $modelo = new ProductionModel();
+$app->group('/envase', function () {
 
-        $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $modelo->GetAllProduction() // Qué función usaré de mi modelo
-                )
-            );
-
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
-
-    });
-
+    
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new ProductionModel();
+        $um = new ContainerModel();
 
         $res
             ->getBody()
@@ -37,15 +20,14 @@ $app->group('/productions', function () {
         );
 
     });
-
-    $this->get('/tree/{id}', function ($req, $res, $args) {
-        $um = new Familyproduccion();
+    $this->get('', function ($req, $res, $args) {
+        $um = new ContainerModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetTree($args['id'])
+                    $um->GetAll()
                 )
             );
         return $res->withHeader(
@@ -54,9 +36,8 @@ $app->group('/productions', function () {
         );
 
     });
-
     $this->post('', function ($req, $res) {
-        $um = new Familyproduccion();
+        $um = new containerModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -72,9 +53,8 @@ $app->group('/productions', function () {
                 )
             );
     });
-
     $this->put('', function ($req, $res) {
-        $um = new Familyproduccion();
+        $um = new containerModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -90,9 +70,8 @@ $app->group('/productions', function () {
                 )
             );
     });
-
     $this->delete('', function ($req, $res) {
-        $um = new Familyproduccion();
+        $um = new containerModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -110,3 +89,5 @@ $app->group('/productions', function () {
 
     });
 });
+
+

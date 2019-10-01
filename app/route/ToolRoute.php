@@ -1,16 +1,21 @@
 <?php
-use App\Model\ProductionModel;
-//llamar como productions
-$app->group('/productions', function () {
+use App\Model\ToolModel;
 
-    $this->get('/all', function ($req, $res, $args) {
-        $modelo = new ProductionModel();
+$app->group('/tools', function () {
+
+    //$this->get('test', function ($req, $res, $args) {
+    //    return $res->getBody()
+    //               ->write('Hello Users');
+    //});
+
+    $this->get('', function ($req, $res, $args) {
+        $um = new ToolModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $modelo->GetAllProduction() // Qué función usaré de mi modelo
+                    $um->GetAll()
                 )
             );
 
@@ -22,7 +27,7 @@ $app->group('/productions', function () {
     });
 
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new ProductionModel();
+        $um = new ToolModel();
 
         $res
             ->getBody()
@@ -38,14 +43,30 @@ $app->group('/productions', function () {
 
     });
 
-    $this->get('/tree/{id}', function ($req, $res, $args) {
-        $um = new Familyproduccion();
+    $this->get('/{id}/owed', function ($req, $res, $args) {
+        $um = new ToolModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetTree($args['id'])
+                    $um->GetFeesOwed($args['id'])
+                )
+            );
+        return $res->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
+
+    });
+    $this->get('/dni/{dni}', function ($req, $res, $args) {
+        $um = new ToolModel();
+
+        $res
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->GetByDNI($args['dni'])
                 )
             );
         return $res->withHeader(
@@ -56,7 +77,7 @@ $app->group('/productions', function () {
     });
 
     $this->post('', function ($req, $res) {
-        $um = new Familyproduccion();
+        $um = new ToolModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -66,15 +87,15 @@ $app->group('/productions', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $um->Insert(
+                    $um->InsertOrUpdate(
                         $req->getParsedBody()
                     )
                 )
             );
     });
 
-    $this->put('', function ($req, $res) {
-        $um = new Familyproduccion();
+    $this->delete('/{id}', function ($req, $res, $args) {
+        $um = new ToolModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -84,29 +105,21 @@ $app->group('/productions', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $um->Update(
-                        $req->getParsedBody()
-                    )
-                )
-            );
-    });
-
-    $this->delete('', function ($req, $res) {
-        $um = new Familyproduccion();
-
-        return $res
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
-            ->withHeader('Content-type', 'application/json')
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->Delete(
-                        $req->getParsedBody()
-                    )
+                    $um->Delete($args['id'])
                 )
             );
 
+        //$res
+        //   ->getBody()
+        //   ->write(
+        //    json_encode(
+        //        $um->Delete($args['id'])
+        //    )
+        //);
+
+        //return $res->withHeader(
+        //    'Content-type',
+        //    'application/json; charset=utf-8'
+        //);
     });
 });
