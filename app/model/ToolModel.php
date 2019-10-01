@@ -3,14 +3,11 @@ namespace App\Model;
 
 use App\Lib\Database;
 use App\Lib\Response;
-use App\Model\FamilyModel;
 
-class MemberModel
+class ToolModel
 {
     private $db;
-    private $membertbl = 'member';
-    private $familytbl = 'familygroup';
-    private $feetbl = 'fee';
+    private $tool = 'herramienta';
     private $response;
 
     public function __CONSTRUCT()
@@ -19,43 +16,35 @@ class MemberModel
         $this->response = new Response();
     }
 
-    /*Get all members */
-    public function GetAll()
-    {
-        try {
-            $result = array();
+    
+    public function GetAll(){
+        
+        try {        
+        
+                 $result = array();
 
-            $stm = $this->db->prepare("SELECT * FROM $this->membertbl order by lastname");
-            $stm->execute();
+                $stm = $this->db->prepare(
 
-            $this->response->setResponse(true);
-            $this->response->result = $stm->fetchAll();
-
-            foreach ($this->response->result as $key => $value) {
-                $stmgenero = $this->db->prepare(
                     "SELECT
-                        gender.idgender,
-                        gender.gendername,
-                        gender.genderdesc,
-                        gender.gendericon
-                    FROM member
-                        JOIN gender on member.gender = gender.idgender
-                    WHERE member.idmember = ?;
-                ");
-                $stmgenero->execute(
-                    array(
-                        $value->idmember,
-                    )
-                );
-                $value->gender = $stmgenero->fetch();
-            }
+                     FROM herramienta");
 
+                $stm->execute(array($id,)
+                );
+                $stmchilds->execute(array($value->childmember));
+                $value->gender = $stmgenero->fetch();
+                    
             return $this->response;
-        } catch (Exception $e) {
+
+            }        
+
+            catch (Exception $e) {
+
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
+
+                }
         }
-    }
+    
 
     /**/
     public function Get($id)
