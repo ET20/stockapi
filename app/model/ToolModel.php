@@ -3,14 +3,13 @@ namespace App\Model;
 
 use App\Lib\Database;
 use App\Lib\Response;
-use App\Model\FamilyModel;
+use App\Model\ToolModel;
 
-class MemberModel
-{
+class ToolModel
+{ 
     private $db;
-    private $membertbl = 'member';
-    private $familytbl = 'familygroup';
-    private $feetbl = 'fee';
+    private $tooltbl = 'herramienta';
+    private $materialtbl = 'material';
     private $response;
 
     public function __CONSTRUCT()
@@ -23,38 +22,29 @@ class MemberModel
     public function GetAll()
     {
         try {
-            $result = array();
+           
+                $stm = $this->db->prepare(
+                    "SELECT                        
+                   * FROM herramienta"
+                    
+                    );
 
-            $stm = $this->db->prepare("SELECT * FROM $this->membertbl order by lastname");
-            $stm->execute();
+                $stm->execute();  
 
-            $this->response->setResponse(true);
+                $this->response->setResponse(true);
+
             $this->response->result = $stm->fetchAll();
+            
+            return $this->response;  
+            
+            
 
-            foreach ($this->response->result as $key => $value) {
-                $stmgenero = $this->db->prepare(
-                    "SELECT
-                        gender.idgender,
-                        gender.gendername,
-                        gender.genderdesc,
-                        gender.gendericon
-                    FROM member
-                        JOIN gender on member.gender = gender.idgender
-                    WHERE member.idmember = ?;
-                ");
-                $stmgenero->execute(
-                    array(
-                        $value->idmember,
-                    )
-                );
-                $value->gender = $stmgenero->fetch();
-            }
-
-            return $this->response;
+            
+            
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
-        }
+            }
     }
 
     /**/
@@ -62,30 +52,16 @@ class MemberModel
     {
         try
         {
-            $result = array();
-
-            $stm = $this->db->prepare("SELECT * FROM $this->membertbl WHERE idmember = ?");
+           
+            $stm = $this->db->prepare("SELECT * FROM $this->tooltbl 
+            JOIN $this->materialtbl
+            ON herramienta.idmaterial = material.idmaterial
+            WHERE idherramienta = ?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
 
-            $stmgenero = $this->db->prepare(
-                "SELECT
-                    gender.idgender,
-                    gender.gendername,
-                    gender.genderdesc,
-                    gender.gendericon
-                FROM member
-                    JOIN gender on member.gender = gender.idgender
-                WHERE member.idmember = ?;
-            ");
-            $stmgenero->execute(
-                array(
-                    $this->response->result->idmember,
-                )
-            );
-            $this->response->result->gender = $stmgenero->fetch();
+            $this->response->result = $stm->fetch();            
 
             return $this->response;
         } catch (Exception $e) {

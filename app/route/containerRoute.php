@@ -1,27 +1,10 @@
  <?php
-/*use App\Model\ContainerModel;
+use App\Model\ContainerModel;
 
 //corregi los errores con las c minusculas
 
 $app->group('/envase', function () {
 
-    $this->get('/todo', function ($req, $res, $args) {
-        $modelo = new ContainerModel();
-
-        $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $modelo->GetAll() // Qué función usaré de mi modelo
-                )
-            );
-
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
-
-    });
     
     $this->get('/{id}', function ($req, $res, $args) {
         $um = new ContainerModel();
@@ -30,7 +13,7 @@ $app->group('/envase', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetByMember($args['id'])
+                    $um->Get($args['id'])
                 )
             );
         return $res->withHeader(
@@ -39,5 +22,74 @@ $app->group('/envase', function () {
         );
 
     });
+    $this->get('', function ($req, $res, $args) {
+        $um = new ContainerModel();
 
-}    /*
+        $res
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->GetAll()
+                )
+            );
+        return $res->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
+
+    });
+    $this->post('', function ($req, $res) {
+        $um = new containerModel();
+
+        return $res
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->withHeader('Content-type', 'application/json')
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Insert(
+                        $req->getParsedBody()
+                    )
+                )
+            );
+    });
+    $this->put('', function ($req, $res) {
+        $um = new containerModel();
+
+        return $res
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->withHeader('Content-type', 'application/json')
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Update(
+                        $req->getParsedBody()
+                    )
+                )
+            );
+    });
+    $this->delete('', function ($req, $res) {
+        $um = new containerModel();
+
+        return $res
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->withHeader('Content-type', 'application/json')
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Delete(
+                        $req->getParsedBody()
+                    )
+                )
+            );
+
+    });
+});
+
+
