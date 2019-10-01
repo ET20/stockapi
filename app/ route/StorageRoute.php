@@ -20,4 +20,21 @@ $app->group('/storage', function () {
         );
 
     });
+    
+    $this->get('/{id}', function ($req, $res, $args) {
+        $um = new StorageModel();
+
+        $res
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Get($args['id'])
+                )
+            );
+        return $res->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
+
+    });
 });
