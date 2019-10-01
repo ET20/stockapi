@@ -38,78 +38,24 @@ class ProductionModel { //Nombre de la clase
             return $this->response;
         }
     }
-
-
+   
     public function Get($id)
     {
         try
         {
-            $result = array();
-
-            $stm = $this->db->prepare(
-                "SELECT DISTINCT
-                    m.*
-                FROM  material m
-                    JOIN produccion p ON m.idmaterial = p.idproduccion
-                WHERE m.idmember = ?");
+           
+            $stm = $this->db->prepare( " SELECT
+            p.* , m.*
+            from
+            produccion p
+            join material m on p.idmaterial = m.idmaterial
+            join unidadmedida um on m.unidad = um.idunidadmedida
+            WHERE p.idmaterial = ?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
 
-            //foreach ($this->response->result as $key => $value) {
-            $stmgenero = $this->db->prepare(
-                "SELECT
-                        gender.idgender,
-                        gender.gendername,
-                        gender.genderdesc,
-                        gender.gendericon
-                    FROM member
-                        JOIN gender on member.gender = gender.idgender
-                    WHERE member.idmember = ?;
-                ");
-            $stmgenero->execute(
-                array(
-                    $this->response->result->idmember,
-                )
-            );
-            $this->response->result->gender = $stmgenero->fetch();
-
-            $stmfamily = $this->db->prepare(
-                "SELECT member.*, familygroup.relationship, memberrelationship.relation
-                    FROM member
-                        JOIN familygroup ON member.idmember = familygroup.childmember
-                        LEFT JOIN memberrelationship ON familygroup.relationship = memberrelationship.idmemberrelationship
-                    WHERE familygroup.parentmember = ? AND familygroup.deleted is not true;
-                ");
-            $stmfamily->execute(
-                array(
-                    $this->response->result->idmember,
-                )
-            );
-            $this->response->result->family = $stmfamily->fetchAll();
-
-            foreach ($this->response->result->family as $key => $value) {
-                $stmgenerochild = $this->db->prepare(
-                    "SELECT
-                            gender.idgender,
-                            gender.gendername,
-                            gender.genderdesc,
-                            gender.gendericon
-                        FROM member
-                            JOIN gender on member.gender = gender.idgender
-                        WHERE member.idmember = ?;
-                    ");
-                $stmgenerochild->execute(
-                    array(
-                        $value->idmember,
-                    )
-                );
-                $value->gender = $stmgenerochild->fetch();
-
-            }
-
-            //}
+            $this->response->result = $stm->fetch();            
 
             return $this->response;
         } catch (Exception $e) {
@@ -117,6 +63,8 @@ class ProductionModel { //Nombre de la clase
             return $this->response;
         }
     }
+
+
 
     public function Insert($data)
     {
