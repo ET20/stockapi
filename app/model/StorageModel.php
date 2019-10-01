@@ -48,4 +48,63 @@ class StorageModel {
             return $this->response;
         }
     }
+/*
+    public function InsertOrUpdate($data) {
+        try {
+            if(isset($data['idalmacen'])) {
+                $sql = "UPDATE $this->stro SET 
+                            idalmacen   =?,
+                            ubicacion   =?,
+                            capacidad   =?,
+                            tipo        =?,
+                            nombre      =?,
+                        WHERE idalmacen =?";
+                $idal = intval($data['idalmacen']);
+                $this->db->prepare($sql)
+                    ->execute(
+                        array(
+                            $data['idalmacen'], 
+                            $data['ubicacion'],
+                            $data['capacidad'],
+                            $data['tipo'],
+                            $data['nombre'],
+                            $idal
+                        )
+                    );
+            } else {
+                $sql = "INSERT INTO $this->stro 
+                            (
+                                idalmacen,
+                                ubicacion,
+                                capacidad,
+                                tipo,
+                                nombre,
+                            ) 
+                            VALUES (
+                                ?, 
+                                ?, 
+                                ?, 
+                                ?, 
+                                ?, 
+                            );";
+                
+                $this->db->prepare($sql)
+                     ->execute(
+                        array(
+                            $data['idalmacen'], 
+                            $data['ubicacion'],
+                            $data['capacidad'],
+                            $data['tipo'],
+                            $data['nombre']
+                        )
+                    ); 
+            }
+            
+            $this->response->setResponse(true);
+            return $this->response;
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+    */
 }
