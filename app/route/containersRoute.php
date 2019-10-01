@@ -1,9 +1,9 @@
  <?php
 use App\Model\ContainersModel;
 
+//Corregir esto!
 $app->group('/envase', function () {
 
-    
     $this->get('/{id}', function ($req, $res, $args) {
         $um = new ContainersModel();
 
@@ -89,5 +89,3 @@ $app->group('/envase', function () {
 
     });
 });
-
-

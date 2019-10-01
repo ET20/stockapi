@@ -135,6 +135,7 @@ class StorageModel
 
             $this->response->setResponse(true);
             return $this->response;
+
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
         }
