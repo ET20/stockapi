@@ -16,12 +16,32 @@ class StorageModel {
     public function GetAll() {
         try {
             $stm = $this->db->prepare(
-                "select s.*,t.idtipoalmacen,t.descripcion from 
-                $this->stro s
-            join $this->ta t on s.tipo = t.idtipoalmacen" );
+                "select * from 
+                $this->stro" );
             $stm->execute();
             $this->response->setResponse(true);
             $this->response->result = $stm->fetchAll(); 
+            return $this->response;
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
+    public function Get($id)
+    {
+        try
+        {
+           
+            $stm = $this->db->prepare(
+                "SELECT * FROM $this->stro
+            WHERE idalmacen = ?");
+            $stm->execute(array($id));
+
+            $this->response->setResponse(true);
+
+            $this->response->result = $stm->fetch();            
+
             return $this->response;
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
