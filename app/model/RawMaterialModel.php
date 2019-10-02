@@ -123,7 +123,7 @@ class RawMaterialModel
         }
     }
 
-    /*Delete a Raw Material by its id*/
+    /*Delete a Raw Material by its idcambio*/ 
     public function Delete($id)
     {
         try
