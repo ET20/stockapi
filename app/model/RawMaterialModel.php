@@ -43,7 +43,7 @@ class RawMaterialModel
     {
         try {
             $stm = $this->db->prepare("
-                SELECT * FROM $this->tooltbl
+                SELECT * FROM $this->table
                 WHERE idmateriaprima = ?");
             $stm->execute(array($id));
 
@@ -63,7 +63,7 @@ class RawMaterialModel
     public function Insert($data)
     {
         try {
-            $sql = "INSERT INTO $this->feetbl
+            $sql = "INSERT INTO $this->table
                     (nombre, descripcion, cantidad, unidad, buenestado)
                     VALUES (?,?,?,?,?);";
 
@@ -91,7 +91,7 @@ class RawMaterialModel
     {
         try {
             if (isset($data['idmateriaprima'])) {
-                $sql = "UPDATE $this->tabla SET
+                $sql = "UPDATE $this->table SET
                             nombre      = ?,
                             descripcion = ?,
                             cantidad    = ?,
@@ -123,13 +123,13 @@ class RawMaterialModel
         }
     }
 
-    /*Delete a Raw Material by its id*/
+    /*Delete a Raw Material by its idcambio*/ 
     public function Delete($id)
     {
         try
         {
             $stm = $this->db
-                ->prepare("DELETE FROM $this->membertbl WHERE idmateriaprima = ?");
+                ->prepare("DELETE FROM $this->table WHERE idmateriaprima = ?");
 
             $stm->execute(array($id));
 
