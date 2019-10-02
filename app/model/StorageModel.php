@@ -1,14 +1,15 @@
 <?php
 namespace App\Model; 
-
 use App\Lib\Database; 
 use App\Lib\Response;
-class StorageModel {
+
+class StorageModel{
     //Rafael Perez! pero perez de pereza!
     private $db;
     private $stro = 'almacen';
     private $ta = "tipoalmacen";
     private $response;  
+
     public function __CONSTRUCT() {
         $this->db = Database::StartUp();
         $this->response = new Response();
