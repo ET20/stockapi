@@ -7,6 +7,8 @@ use App\Lib\Response; //Importamos el archivo que arma la respuesta
 class ProductionModel { //Nombre de la clase
     private $db;
     private $dbPr = 'produccion';
+    private $dbPv = "precioventa";
+    private $dbPrId = "idproduccion";
     private $response;
 
     //Construimos la clase ProduccionModelo
@@ -21,47 +23,42 @@ class ProductionModel { //Nombre de la clase
             //Consulta SQL que ejecutaremos
             //statement = consulta = consulta
             $stmp = $this->db->prepare(
-                "SELECT 
-                 * from
-                $this->dbPr
+                "SELECT * 
+                from $this->dbPr 
                 "   
             );
             $stmp->execute(); 
             $this->response->setResponse(true);
             $this->response->result_production = $stmp->fetchAll();
-            return $this->response;
-        } catch (Exception $e) {
+            return $this->response;} catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
-            return $this->response;
-        }
+            return $this->response;}
     }
    
-    public function Get($id)
-    {
-        try
-        {
-           
+    public function Get($id) {
+        try {   
             $stm = $this->db->prepare( "SELECT 
-            p.* from produccion p WHERE p.idmaterial = ?");
+            dbPv.*,dbPr.* FROM $this->dbPr p
+             
+             JOIN $this->dbPv dbPv v.$this->dbPr = dbPr.$this->dbPv
+             WHERE $this->dbPrId = ?
+             ");
+
+
             $stm->execute(array($id));
-
             $this->response->setResponse(true);
-
             $this->response->result = $stm->fetch();            
-
-            return $this->response;
-        } catch (Exception $e) {
+            return $this->response;} catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
-            return $this->response;
-        }
-    }
+            return $this->response; }
+}
 
 
 
     public function Insert($data)
     {
         try {
-            $sql = "INSERT INTO $this->feetbl
+            $sql = "INSERT INTO $this->dbPr
                     (nombre, descripcion, cantidad, unidad, buenestado)
                     VALUES (?,?,?,?,?);";
 
