@@ -108,9 +108,9 @@ class ToolModel
                             unidad      = ?,
                             buenestado  = ?,
                             marca       = ?,
-                            modelo      = ?
+                            modelo      = ?s
 
-                        WHERE idmateriaprima = ?";
+                        WHERE idherramienta = ?";
 
                 $idherramienta = intval($data['idherramienta']);
                 $this->db->prepare($sql)
