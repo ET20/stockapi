@@ -104,7 +104,7 @@ class ContainersModel { //Nombre de la clase
     {
         try {
             if (isset($data['idenvase'])) {
-                $sql = "UPDATE $this->tabla SET
+                $sql = "UPDATE $this->envase SET
                             idenvase    = ?, 
                             idmaterial  = ?,
                             capacidad   = ?,
@@ -172,7 +172,7 @@ class ContainersModel { //Nombre de la clase
         try
         {
             $stm = $this->db
-                ->prepare("DELETE FROM $this->membertbl WHERE idenvase = ?");
+                ->prepare("DELETE FROM $this->envase WHERE idenvase = ?");
 
             $stm->execute(array($id));
 

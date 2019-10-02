@@ -67,6 +67,7 @@ $app->group('/envase', function () {
                 json_encode(
                     $um->Insert(
                         $req->getParsedBody()
+                        
                     )
                 )
             );
