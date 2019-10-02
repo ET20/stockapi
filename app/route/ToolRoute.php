@@ -3,7 +3,7 @@ use App\Model\ToolModel;
 
 $app->group('/tools', function () {
 
-    //$this->get('test', function ($req, $res, $args) {
+    //sadasda$this->get('test', function ($req, $res, $args) {
     //    return $res->getBody()
     //               ->write('Hello Users');
     //});
@@ -43,65 +43,48 @@ $app->group('/tools', function () {
 
     });
 
-    $this->get('/{id}/owed', function ($req, $res, $args) {
+    $this->post('/', function ($req, $res) {
         $um = new ToolModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetFeesOwed($args['id'])
-                )
-            );
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
-
-    });
-    $this->get('/dni/{dni}', function ($req, $res, $args) {
-        $um = new ToolModel();
-
-        $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->GetByDNI($args['dni'])
-                )
-            );
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
-
-    });
-
-    $this->post('', function ($req, $res) {
-        $um = new ToolModel();
-
-        return $res
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
-            ->withHeader('Content-type', 'application/json')
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->InsertOrUpdate(
+                    $um->Insert(
                         $req->getParsedBody()
                     )
                 )
             );
+
+        return $res->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
+    });
+
+    $this->put('/', function ($req, $res) {
+        $um = new ToolModel();
+
+        $res
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Update(
+                        $req->getParsedBody()
+                    )
+                )
+            );
+
+        return $res->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
     });
 
     $this->delete('/{id}', function ($req, $res, $args) {
         $um = new ToolModel();
 
-        return $res
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
-            ->withHeader('Content-type', 'application/json')
+        $res
             ->getBody()
             ->write(
                 json_encode(
@@ -109,17 +92,10 @@ $app->group('/tools', function () {
                 )
             );
 
-        //$res
-        //   ->getBody()
-        //   ->write(
-        //    json_encode(
-        //        $um->Delete($args['id'])
-        //    )
-        //);
-
-        //return $res->withHeader(
-        //    'Content-type',
-        //    'application/json; charset=utf-8'
-        //);
+        return $res->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
     });
+
 });
