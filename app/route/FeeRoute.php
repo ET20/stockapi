@@ -1,10 +1,11 @@
 <?php
-use App\Model\FeeModel;
+use App\Model\AlmacenModel;
 
-$app->group('/fees', function () {
+
+$app->group('/almacen', function () {
 
     $this->get('', function ($req, $res, $args) {
-        $um = new FeeModel();
+        $um = new almacenModel();
         
         $res
            ->getBody()
@@ -22,7 +23,7 @@ $app->group('/fees', function () {
     });
     
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new FeeModel();
+        $um = new almacenModel();
         
         $res
            ->getBody()
@@ -40,7 +41,7 @@ $app->group('/fees', function () {
     });
 
      $this->get('/members/{id}', function ($req, $res, $args) {
-        $um = new FeeModel();
+        $um = new almacenModel();
         
         $res
            ->getBody()
@@ -58,7 +59,7 @@ $app->group('/fees', function () {
     });
 
     $this->post('', function ($req, $res) {
-        $um = new FeeModel();
+        $um = new almacenModel();
         
         $res
            ->getBody()
@@ -77,7 +78,7 @@ $app->group('/fees', function () {
     });
 
     $this->post('/bulk', function ($req, $res) {
-        $um = new FeeModel();
+        $um = new almacenModel();
         
         $res
            ->getBody()
@@ -96,7 +97,7 @@ $app->group('/fees', function () {
     });
 
     $this->put('/put', function ($req, $res) {
-        $um = new FeeModel();
+        $um = new almacenModel();
         
         $res
            ->getBody()
@@ -115,7 +116,7 @@ $app->group('/fees', function () {
     });
     
     $this->delete('/{id}', function ($req, $res, $args) {
-        $um = new FeeModel();
+        $um = new almacenModel();
         
         $res
            ->getBody()
