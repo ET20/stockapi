@@ -3,7 +3,7 @@ use App\Model\ToolModel;
 
 $app->group('/tools', function () {
 
-    //$this->get('test', function ($req, $res, $args) {
+    //sadasda$this->get('test', function ($req, $res, $args) {
     //    return $res->getBody()
     //               ->write('Hello Users');
     //});

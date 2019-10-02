@@ -137,7 +137,7 @@ class ToolModel
         }
     }
 
-    /*Delete a tools by its id*/
+    /*Delete a tools by its idsadasdas*/
     public function Delete($id)
     {
         try
