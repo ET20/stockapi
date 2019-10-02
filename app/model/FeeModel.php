@@ -4,11 +4,11 @@ namespace App\Model;
 use App\Lib\Database;
 use App\Lib\Response;
 
-class FeeModel {
+class almacenModel {
     private $db;
-    private $feetbl = 'fee';
+    private $almacentbl = 'fee';
     private $membertbl = 'member';
-    private $familygrouptbl = 'familygroup';
+    private $almacengrouptbl = 'almacengroup';
     private $response;
     
     public function __CONSTRUCT() {
@@ -134,7 +134,7 @@ class FeeModel {
                     "SELECT 
                         f.* 
                     FROM
-                        $this->familygrouptbl fg
+                        $this->almacengrouptbl fg
                         JOIN $this->feetbl f ON fg.childmember = f.idmember
                     WHERE
                         parentmember = ? "
@@ -143,10 +143,10 @@ class FeeModel {
             } else {
 
                 $stmFees = $this->db->prepare(
-                    "SELECT
+                    "SELECT almacen
                         *
                     FROM
-                        $this->feetbl
+                        $this->stockbl
                     WHERE
                         idmember = ? "
                 );
