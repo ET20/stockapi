@@ -102,6 +102,47 @@ class ContainersModel { //Nombre de la clase
     }
     public function Update($data)
     {
+        try {
+            if (isset($data['idenvase'])) {
+                $sql = "UPDATE $this->tabla SET
+                            idenvase    = ?, 
+                            idmaterial  = ?,
+                            capacidad   = ?,
+                            nombre      = ?,
+                            descripcion = ?,
+                            cantidad    = ?,
+                            unidad      = ?,
+                            buenestado  = ?
+
+                        WHERE idenvase = ?";
+
+                $idenvase = intval($data['idenvase']);
+                $this->db->prepare($sql)
+                    ->execute(
+                        array(
+                            $data['idenvase'],
+                            $data['idmaterial'],
+                            $data['capacidad'],
+                            $data['nombre'],
+                            $data['descripcion'],
+                            $data['cantidad'],
+                            $data['unidad'],
+                            $data['buenestado'],
+                            $idenvase,
+                        )
+                    );
+            }
+
+            $this->response->setResponse(true);
+
+            return $this->response;
+
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+    /* public function Update($data)
+    {
         try
         {
             $sql = "UPDATE $this->envase
@@ -124,8 +165,25 @@ class ContainersModel { //Nombre de la clase
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
         }
+    }*/
+
+    public function Delete($id)
+    {
+        try
+        {
+            $stm = $this->db
+                ->prepare("DELETE FROM $this->membertbl WHERE idenvase = ?");
+
+            $stm->execute(array($id));
+
+            $this->response->setResponse(true);
+            return $this->response;
+
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
     }
-    public function Delete($data)
+    /*public function Delete($data)
     {
 		try 
 		{
@@ -144,7 +202,7 @@ class ContainersModel { //Nombre de la clase
 		{
 			$this->response->setResponse(false, $e->getMessage());
 		}
-    }
+    }*/
 
 
 }
