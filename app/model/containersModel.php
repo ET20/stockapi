@@ -75,11 +75,10 @@ class ContainersModel { //Nombre de la clase
     }
     public function Insert($data)
     {
-        try
-        {
+        try {
             $sql = "INSERT INTO $this->envase
-                (idenvase, idmaterial, capacidad, datetime)
-                VALUES (?,?,?,(select now()))";
+                    ((idenvase, idmaterial, capacidad, nombre, descripcion, cantidad, unidad, buenestado)
+                    VALUES (?,?,?,?,?,?,?,?);";
 
             $this->db->prepare($sql)
                 ->execute(
@@ -87,6 +86,11 @@ class ContainersModel { //Nombre de la clase
                         $data['idenvase'],
                         $data['idmaterial'],
                         $data['capacidad'],
+                        $data['nombre'],
+                        $data['descripcion'],
+                        $data['cantidad'],
+                        $data['unidad'],
+                        $data['buenestado'],
                     )
                 );
 
