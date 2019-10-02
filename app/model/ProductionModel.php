@@ -9,6 +9,7 @@ class ProductionModel { //Nombre de la clase
     private $dbPr = 'produccion';
     private $dbPv = "precioventa";
     private $dbPrId = "idproduccion";
+    private $dbPvId = "idprecioventa";
     private $response;
 
     //Construimos la clase ProduccionModelo
@@ -35,14 +36,19 @@ class ProductionModel { //Nombre de la clase
             return $this->response;}
     }
    
+/*
+    "SELECT 
+    dbPr.*,dbPv.* FROM $this->dbPr dbPr , $this->dbPv dbPv
+       WHERE $this->dbPrId = ?
+       join $this->dbPv dbPv  on dbPv.$this->dbPvId = dbPr.$this->dbPrId
+
+       "
+*/
     public function Get($id) {
         try {   
-            $stm = $this->db->prepare( "SELECT 
-            dbPv.*,dbPr.* FROM $this->dbPr p
-             
-             JOIN $this->dbPv dbPv v.$this->dbPr = dbPr.$this->dbPv
-             WHERE $this->dbPrId = ?
-             ");
+            $stm = $this->db->prepare( "SELECT p.* FROM produccion p 
+                        WHERE p.idproduccion = ?
+                 ");
 
 
             $stm->execute(array($id));
