@@ -3,7 +3,7 @@ use App\Model\StorageModel;
 
 $app->group('/storage', function () {
 
-    $this->get('/almacen', function ($req, $res, $args) {
+    $this->get('', function ($req, $res, $args) {
         $modelo = new StorageModel();
 
         $res

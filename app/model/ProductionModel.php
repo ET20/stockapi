@@ -6,7 +6,7 @@ use App\Lib\Response; //Importamos el archivo que arma la respuesta
 
 class ProductionModel { //Nombre de la clase
     private $db;
-    private $production = 'produccion';
+    private $dbPr = 'produccion';
     private $response;
 
     //Construimos la clase ProduccionModelo
@@ -21,12 +21,9 @@ class ProductionModel { //Nombre de la clase
             //Consulta SQL que ejecutaremos
             //statement = consulta = consulta
             $stmp = $this->db->prepare(
-                "select
-                p.idproduccion ,p.idmaterial,m.nombre,p.lote,p.fechayhoradelaproduccion,m.cantidad,m.cantidad,m.buenestado,m.unidad,um.nombre Nombre_UN
-                from
-                produccion p
-                join material m on p.idmaterial = m.idmaterial
-                join unidadmedida um on m.unidad = um.idunidadmedida
+                "SELECT 
+                 * from
+                $this->dbPr
                 "   
             );
             $stmp->execute(); 
@@ -44,13 +41,8 @@ class ProductionModel { //Nombre de la clase
         try
         {
            
-            $stm = $this->db->prepare( " SELECT
-            p.* , m.*
-            from
-            produccion p
-            join material m on p.idmaterial = m.idmaterial
-            join unidadmedida um on m.unidad = um.idunidadmedida
-            WHERE p.idmaterial = ?");
+            $stm = $this->db->prepare( "SELECT 
+            p.* from produccion p WHERE p.idmaterial = ?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
@@ -68,22 +60,24 @@ class ProductionModel { //Nombre de la clase
 
     public function Insert($data)
     {
-        try
-        {
-            $sql = "INSERT INTO $this->familygrouptbl
-                (parentmember, childmember, relationship, datetime)
-                VALUES (?,?,?,(select now()))";
+        try {
+            $sql = "INSERT INTO $this->feetbl
+                    (nombre, descripcion, cantidad, unidad, buenestado)
+                    VALUES (?,?,?,?,?);";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
-                        $data['parentmember'],
-                        $data['childmember'],
-                        $data['relationship'],
+                        $data['nombre'],
+                        $data['descripcion'],
+                        $data['cantidad'],
+                        $data['unidad'],
+                        $data['buenestado'],
                     )
                 );
 
             $this->response->setResponse(true);
+
             return $this->response;
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
