@@ -1,16 +1,16 @@
 <?php
-use App\Model\FamilyModel;
+use App\Model\ProductionModel;
+//llamar como productions
+$app->group('/productions', function () {
 
-$app->group('/families', function () {
-
-    $this->get('', function ($req, $res, $args) {
-        $um = new FamilyModel();
+    $this->get('/all', function ($req, $res, $args) {
+        $modelo = new ProductionModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetAll()
+                    $modelo->GetAllProduction() // Qué función usaré de mi modelo
                 )
             );
 
@@ -22,13 +22,13 @@ $app->group('/families', function () {
     });
 
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new FamilyModel();
+        $um = new ProductionModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetByMember($args['id'])
+                    $um->Get($args['id'])
                 )
             );
         return $res->withHeader(
@@ -39,7 +39,7 @@ $app->group('/families', function () {
     });
 
     $this->get('/tree/{id}', function ($req, $res, $args) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         $res
             ->getBody()
@@ -56,7 +56,7 @@ $app->group('/families', function () {
     });
 
     $this->post('', function ($req, $res) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -74,7 +74,7 @@ $app->group('/families', function () {
     });
 
     $this->put('', function ($req, $res) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -92,7 +92,7 @@ $app->group('/families', function () {
     });
 
     $this->delete('', function ($req, $res) {
-        $um = new FamilyModel();
+        $um = new Familyproduccion();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
