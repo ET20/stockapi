@@ -46,8 +46,8 @@ class ProductionModel { //Nombre de la clase
 */
     public function Get($id) {
         try {   
-            $stm = $this->db->prepare( "SELECT p.* FROM produccion p 
-                        WHERE p.idproduccion = ?
+            $stm = $this->db->prepare( "SELECT dbpr.* FROM $this->dbPr dbpr
+                        WHERE dbpr.$this->dbPrId = ?
                  ");
 
 
@@ -65,17 +65,20 @@ class ProductionModel { //Nombre de la clase
     {
         try {
             $sql = "INSERT INTO $this->dbPr
-                    (nombre, descripcion, cantidad, unidad, buenestado)
-                    VALUES (?,?,?,?,?);";
+                    (idproduccion,nombre,cantidad,descripcion,unidad,buenestado,lote,fechayhoradelaproduccion)
+                    VALUES (?,?,?,?,?,?,?);";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
+                        $data['idproduccion'],
                         $data['nombre'],
-                        $data['descripcion'],
                         $data['cantidad'],
+                        $data['descripcion'],
                         $data['unidad'],
                         $data['buenestado'],
+                        $data['lote'],
+                         $data['fechayhoradelaproduccion'],
                     )
                 );
 
@@ -120,12 +123,11 @@ class ProductionModel { //Nombre de la clase
 		try 
 		{
 			$stm = $this->db
-			            ->prepare("DELETE FROM $this->familygrouptbl WHERE (childmember = ?) and (parentmember = ?)");			          
+			            ->prepare("DELETE FROM $this->dbPr WHERE ($this->dbPrId = ?)");			          
 
 			$stm->execute(
                 array(
                         $data['childmember'],
-                        $data['parentmember'],
                     ));
             
 			$this->response->setResponse(true);
