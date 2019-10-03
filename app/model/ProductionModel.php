@@ -65,13 +65,12 @@ class ProductionModel { //Nombre de la clase
     {
         try {
             $sql = "INSERT INTO $this->dbPr
-                    (idproduccion,nombre,cantidad,descripcion,unidad,buenestado,lote,fechayhoradelaproduccion)
-                    VALUES (?,?,?,?,?,?,?);";
+                    (nombre,cantidad,descripcion,unidad,buenestado,lote,fechayhoradelaproduccion)
+                    VALUES (,?,?,?,?,?,?);";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
-                        $data['idproduccion'],
                         $data['nombre'],
                         $data['cantidad'],
                         $data['descripcion'],
