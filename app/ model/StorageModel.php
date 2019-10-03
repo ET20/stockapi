@@ -49,7 +49,7 @@ class StorageModel{
             return $this->response;
         }
     }
-/*
+
     public function InsertOrUpdate($data) {
         try {
             if(isset($data['idalmacen'])) {
@@ -74,21 +74,8 @@ class StorageModel{
                     );
             } else {
                 $sql = "INSERT INTO $this->stro 
-                            (
-                                idalmacen,
-                                ubicacion,
-                                capacidad,
-                                tipo,
-                                nombre,
-                            ) 
-                            VALUES (
-                                ?, 
-                                ?, 
-                                ?, 
-                                ?, 
-                                ?, 
-                            );";
-                
+                            (idalmacen,ubicacion,capacidad,tipo,nombre,) 
+                            VALUES (?,?,?,?,?);";
                 $this->db->prepare($sql)
                      ->execute(
                         array(
@@ -107,5 +94,20 @@ class StorageModel{
             $this->response->setResponse(false, $e->getMessage());
         }
     }
-    */
+
+    public function delete($id) {
+        try
+        {
+            $stm = $this->db
+                ->prepare("DELETE FROM $this->stro WHERE idalmacen = ?");
+
+            $stm->execute(array($id));
+
+            $this->response->setResponse(true);
+            return $this->response;
+
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
 }
