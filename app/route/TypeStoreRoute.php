@@ -1,7 +1,7 @@
 <?php
 use App\Model\TypeStoreModel;
 
-$app->group('/raw', function () {
+$app->group('/tipoalmacen', function () {
 
     $this->get('', function ($req, $res, $args) {
         $um = new TypeStoreModel();
