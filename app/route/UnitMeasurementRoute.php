@@ -1,5 +1,5 @@
 <?php
-use App\Model\AlmacenModel;
+use App\Model\UnitMeasurementModel;
 
 
 $app->group('/units', function () {

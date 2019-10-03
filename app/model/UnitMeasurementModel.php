@@ -4,7 +4,7 @@ namespace App\Model;
 use App\Lib\Database;
 use App\Lib\Response;
 
-class almacenModel {
+class UnitMeasurementModel {
     private $db;
     private $unitm = 'unidadmedida';
     private $response;
