@@ -65,7 +65,7 @@ class ProductionModel { //Nombre de la clase
     {
         try {
             $sql = "INSERT INTO $this->dbPr
-                    (nombre,cantidad,descripcion,unidad,buenestado,lote)
+                    (nombre,cantidad,descripcion,unidad,buentestado,lote)
                     VALUES (?,?,?,?,?,?);";
 
             $this->db->prepare($sql)
@@ -75,7 +75,7 @@ class ProductionModel { //Nombre de la clase
                         $data['cantidad'],
                         $data['descripcion'],
                         $data['unidad'],
-                        $data['buenestado'],
+                        $data['buentestado'],
                         $data['lote'],
                     )
                 );
@@ -88,60 +88,54 @@ class ProductionModel { //Nombre de la clase
         }
     }
 
-    public function Update($data)
-    {
-        try {
-            if (isset($data['idproduccion'])) {
-                $sql = "UPDATE $this->tooltbl SET
-                            nombre      = ?,
-                            cantidad = ?,
-                            descripcion    = ?,
-                            unidad      = ?,
-                            buenestado       = ?,
-                            lote      = ?
+    public function Update($data){
+        try{
+        if (isset($data['idproduccion'])) {
+            $sql = "UPDATE $this->dbPr SET
+                        nombre = ?
+                        cantidad  = ?
+                        descripcion = ?
+                        unidad = ?
+                        buentestado = ?
+                        lote = ?
+                    WHERE idproduccion = ?";
 
-                        WHERE idherramienta = ?";
-
-                $idherramienta = intval($data['idherramienta']);
-                $this->db->prepare($sql)
-                    ->execute(
-                        array(
-                            $data['nombre'],
-                            $data['cantidad'],
-                            $data['descripcion'],
-                            $data['unidad'],
-                            $data['buenestado'],
-                            $data['buenestado'],
-                            $data['lote'],
-                            $idherramienta,
-                        )
-                    );
+            $id = intval($data['idproduccion']);
+            $this->db->prepare($sql)
+                ->execute(
+                    array(
+                        $data['nombre'],
+                        $data['cantidad'],
+                        $data['descripcion'],
+                        $data['unidad'],
+                        $data['buentestado'],
+                        $data['lote'],
+                        $id,
+                    )
+                );
             }
-
             $this->response->setResponse(true);
-
             return $this->response;
-
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
         }
     }
 
-    public function Delete($data)
+public function Delete($id) {
+    try
     {
-		try 
-		{
-			$stm = $this->db
-			            ->prepare("DELETE FROM $this->dbPr WHERE ($this->dbPrId = ?)");			          
+        $stm = $this->db
+            ->prepare(" DELETE FROM $this->dbPr 
+            WHERE $this->dbPrId = ?");
 
-			$stm->execute(
-                array($data));
-            
-			$this->response->setResponse(true);
-            return $this->response;
-		} catch (Exception $e) 
-		{
-			$this->response->setResponse(false, $e->getMessage());
-		}
+        $stm->execute(array($id));
+
+        $this->response->setResponse(true);
+        return $this->response;
+
+    } catch (Exception $e) {
+        $this->response->setResponse(false, $e->getMessage());
     }
+}
+
 }
