@@ -30,7 +30,7 @@ class ProductionModel { //Nombre de la clase
             );
             $stmp->execute(); 
             $this->response->setResponse(true);
-            $this->response->result_production = $stmp->fetchAll();
+            $this->response->result = $stmp->fetchAll();
             return $this->response;} catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;}
@@ -65,8 +65,8 @@ class ProductionModel { //Nombre de la clase
     {
         try {
             $sql = "INSERT INTO $this->dbPr
-                    (nombre,cantidad,descripcion,unidad,buenestado,lote,fechayhoradelaproduccion)
-                    VALUES (,?,?,?,?,?,?);";
+                    (nombre,cantidad,descripcion,unidad,buenestado,lote)
+                    VALUES (?,?,?,?,?,?);";
 
             $this->db->prepare($sql)
                 ->execute(
@@ -77,7 +77,6 @@ class ProductionModel { //Nombre de la clase
                         $data['unidad'],
                         $data['buenestado'],
                         $data['lote'],
-                         $data['fechayhoradelaproduccion'],
                     )
                 );
 

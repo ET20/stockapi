@@ -37,7 +37,7 @@ $app->group('/productions', function () {
         );
 
     });
-
+/*
     $this->get('/tree/{id}', function ($req, $res, $args) {
         $um = new Familyproduccion();
 
@@ -54,9 +54,10 @@ $app->group('/productions', function () {
         );
 
     });
+    */
 
-    $this->post('', function ($req, $res) {
-        $um = new Familyproduccion();
+    $this->post('/', function ($req, $res) {
+        $um = new ProductionModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -73,8 +74,8 @@ $app->group('/productions', function () {
             );
     });
 
-    $this->put('', function ($req, $res) {
-        $um = new Familyproduccion();
+    $this->put('/', function ($req, $res) {
+        $um = new ProductionModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -91,8 +92,8 @@ $app->group('/productions', function () {
             );
     });
 
-    $this->delete('', function ($req, $res) {
-        $um = new Familyproduccion();
+    $this->delete('/{id}', function ($req, $res) {
+        $um = new ProductionModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
