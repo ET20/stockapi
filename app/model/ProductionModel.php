@@ -90,31 +90,42 @@ class ProductionModel { //Nombre de la clase
 
     public function Update($data)
     {
-        try
-        {
-            $sql = "UPDATE $this->familygrouptbl
-            SET
-                relationship = ?,
-                datetime = (select now())
-            WHERE (childmember = ?) and (parentmember = ?)";
+        try {
+            if (isset($data['idproduccion'])) {
+                $sql = "UPDATE $this->tooltbl SET
+                            nombre      = ?,
+                            cantidad = ?,
+                            descripcion    = ?,
+                            unidad      = ?,
+                            buenestado       = ?,
+                            lote      = ?
 
-            $this->db->prepare($sql)
-                ->execute(
-                    array(
-                        $data['relationship'],
-                        $data['childmember'],
-                        $data['parentmember'],
-                    )
-                );
+                        WHERE idherramienta = ?";
+
+                $idherramienta = intval($data['idherramienta']);
+                $this->db->prepare($sql)
+                    ->execute(
+                        array(
+                            $data['nombre'],
+                            $data['cantidad'],
+                            $data['descripcion'],
+                            $data['unidad'],
+                            $data['buenestado'],
+                            $data['buenestado'],
+                            $data['lote'],
+                            $idherramienta,
+                        )
+                    );
+            }
 
             $this->response->setResponse(true);
+
             return $this->response;
+
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
         }
     }
-
-
 
     public function Delete($data)
     {
@@ -124,9 +135,7 @@ class ProductionModel { //Nombre de la clase
 			            ->prepare("DELETE FROM $this->dbPr WHERE ($this->dbPrId = ?)");			          
 
 			$stm->execute(
-                array(
-                        $data['childmember'],
-                    ));
+                array($data));
             
 			$this->response->setResponse(true);
             return $this->response;
