@@ -135,16 +135,7 @@ class ProductionModel { //Nombre de la clase
 			            ->prepare("DELETE FROM $this->dbPr WHERE ($this->dbPrId = ?)");			          
 
 			$stm->execute(
-                array(
-                    $data['nombre'],
-                    $data['cantidad'],
-                    $data['descripcion'],
-                    $data['unidad'],
-                    $data['buenestado'],
-                    $data['buenestado'],
-                    $data['lote'],
-                    $data['idherramienta'],
-                    ));
+                array($data));
             
 			$this->response->setResponse(true);
             return $this->response;
