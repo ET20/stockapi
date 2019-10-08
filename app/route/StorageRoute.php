@@ -45,7 +45,26 @@ $app->group('/storage', function () {
            ->getBody()
            ->write(
             json_encode(
-                $um->InsertOrUpdate(
+                $um->Insert(
+                    $req->getParsedBody()
+                )
+            )
+        );
+        
+        return $res->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
+    });
+
+    $this->put('/', function ($req, $res) {
+        $um = new StorageModel();
+        
+        $res
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Update(
                     $req->getParsedBody()
                 )
             )
