@@ -19,7 +19,7 @@ class ProductionModel { //Nombre de la clase
     }
 
     //Función que recupera todos los item de Produccion
-    public function GetAllProduction() {
+    public function GetAll() {
         try {
             //Consulta SQL que ejecutaremos
             //statement = consulta = consulta
