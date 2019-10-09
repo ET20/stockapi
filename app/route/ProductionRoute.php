@@ -10,7 +10,7 @@ $app->group('/productions', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $modelo->GetAllProduction() // Qué función usaré de mi modelo
+                    $modelo->GetAll() // Qué función usaré de mi modelo
                 )
             );
 
@@ -28,7 +28,7 @@ $app->group('/productions', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $um->Get($args['id'])
+                    $um->get($args['id'])
                 )
             );
         return $res->withHeader(
