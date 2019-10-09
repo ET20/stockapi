@@ -36,7 +36,7 @@ class StorageModel{
            
             $stm = $this->db->prepare(
                 "SELECT * FROM $this->stro
-            WHERE idAlmacen = ?");
+            WHERE idalmacen = ?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
@@ -77,7 +77,7 @@ class StorageModel{
 
     public function Update($data){
         try{
-        if (isset($data['idAlmacen'])) {
+        if (isset($data['idalmacen'])) {
             $sql = "UPDATE $this->stro SET
                         ubicacion     = ?,
                         capacidad     = ?,
@@ -85,7 +85,7 @@ class StorageModel{
                         nombre        = ?
                     WHERE idAlmacen = ?";
 
-            $id = intval($data['idAlmacen']);
+            $id = intval($data['idalmacen']);
             $this->db->prepare($sql)
                 ->execute(
                     array(
@@ -110,7 +110,7 @@ class StorageModel{
         try
         {
             $stm = $this->db
-                ->prepare("DELETE FROM $this->stro WHERE idAlmacen = ?");
+                ->prepare("DELETE FROM $this->stro WHERE idalmacen = ?");
 
             $stm->execute(array($id));
 
