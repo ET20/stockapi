@@ -4,12 +4,12 @@ namespace App\Model; //Donde estamos
 use App\Lib\Database; //Importamos el archivo que conecta a la base de datos
 use App\Lib\Response; //Importamos el archivo que arma la respuesta
 
-class ContainersModel { //Nombre de la clase
+class ContainerModel { //Nombre de la clase
     private $db;
-    private $containers = 'envase';
+    private $container = 'envase';
     private $response;
 
-    //Construimos la clase ContainersModelo
+    //Construimos la clase ContainerModelo
     public function __CONSTRUCT() {
         $this->db = Database::StartUp();
         $this->response = new Response();
@@ -44,7 +44,7 @@ class ContainersModel { //Nombre de la clase
 
 
     }
-    public function GetAll() {
+    public function Get() {
         try 
         {
             $result = array();
@@ -58,7 +58,7 @@ class ContainersModel { //Nombre de la clase
             $stm->execute();
 
             $this->response->setResponse(true);
-            $this->response->result = $stm->fetchAll();
+            $this->response->result = $stm->fetch();
         
             
            
@@ -141,31 +141,6 @@ class ContainersModel { //Nombre de la clase
             $this->response->setResponse(false, $e->getMessage());
         }
     }
-    /* public function Update($data)
-    {
-        try
-        {
-            $sql = "UPDATE $this->envase
-            SET
-                relationship = ?,
-                datetime = (select now())
-            WHERE (idenvase = ?) and (idmaterial = ?)";
-
-            $this->db->prepare($sql)
-                ->execute(
-                    array(
-                        $data['relationship'],
-                        $data['idenvase'],
-                        $data['idmaterial'],
-                    )
-                );
-
-            $this->response->setResponse(true);
-            return $this->response;
-        } catch (Exception $e) {
-            $this->response->setResponse(false, $e->getMessage());
-        }
-    }*/
 
     public function Delete($id)
     {
@@ -183,29 +158,9 @@ class ContainersModel { //Nombre de la clase
             $this->response->setResponse(false, $e->getMessage());
         }
     }
-    /*public function Delete($data)
-    {
-		try 
-		{
-			$stm = $this->db
-			            ->prepare("DELETE FROM $this->familygrouptbl WHERE (idenvase = ?) and (idmaterial = ?)");			          
-
-			$stm->execute(
-                array(
-                        $data['idenvase'],
-                        $data['idmaterial'],
-                    ));
-            
-			$this->response->setResponse(true);
-            return $this->response;
-		} catch (Exception $e) 
-		{
-			$this->response->setResponse(false, $e->getMessage());
-		}
-    }*/
 
 
 }
 
-//hice cambio..
 
+//aa
