@@ -92,7 +92,7 @@ $app->group('/productions', function () {
             );
     });
 
-    $this->delete('/{id}', function ($req, $res) {
+    $this->delete('/{id}', function ($req, $res,$args) {
         $um = new ProductionModel();
 
         return $res
@@ -104,7 +104,7 @@ $app->group('/productions', function () {
             ->write(
                 json_encode(
                     $um->Delete(
-                        $req->getParsedBody()
+                        $args['id']
                     )
                 )
             );

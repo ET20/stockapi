@@ -65,7 +65,7 @@ class ProductionModel { //Nombre de la clase
     {
         try {
             $sql = "INSERT INTO $this->dbPr
-                    (nombre,cantidad,descripcion,unidad,buentestado,lote)
+                    (nombre,cantidad,descripcion,buenestado,monto,lote)
                     VALUES (?,?,?,?,?,?);";
 
             $this->db->prepare($sql)
@@ -74,9 +74,9 @@ class ProductionModel { //Nombre de la clase
                         $data['nombre'],
                         $data['cantidad'],
                         $data['descripcion'],
-                        $data['unidad'],
-                        $data['buentestado'],
+                        $data['buenestado'],
                         $data['lote'],
+                        $data['monto'],
                     )
                 );
 
@@ -125,8 +125,8 @@ public function Delete($id) {
     try
     {
         $stm = $this->db
-            ->prepare(" DELETE FROM $this->dbPr 
-            WHERE $this->dbPrId = ?");
+            ->prepare(" DELETE FROM $this->dbPr
+            WHERE $this->dbPr.$this->dbPrId = ?");
 
         $stm->execute(array($id));
 
