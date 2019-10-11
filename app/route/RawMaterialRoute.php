@@ -1,5 +1,5 @@
 <?php
-use App\Model\RawMaterialModell;
+use App\Model\RawMaterialModel;
 
 $app->group('/raws', function () {
 
