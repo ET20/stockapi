@@ -1,7 +1,7 @@
 <?php
 use App\Model\UnitMeasurementModel;
 
-$app->group('/unit', function () {
+$app->group('/units', function () {
 
     $this->get('', function ($req, $res, $args) {
         $um = new UnitMeasurementModel();

@@ -3,11 +3,7 @@ use App\Model\ToolModel;
 
 $app->group('/tools', function () {
 
-    //sadasda$this->get('test', function ($req, $res, $args) {
-    //    return $res->getBody()
-    //               ->write('Hello Users');
-    //});
-
+    
     $this->get('', function ($req, $res, $args) {
         $um = new ToolModel();
 
@@ -25,7 +21,6 @@ $app->group('/tools', function () {
         );
 
     });
-
     $this->get('/{id}', function ($req, $res, $args) {
         $um = new ToolModel();
 
