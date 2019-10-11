@@ -1,10 +1,10 @@
 <?php
-use App\Model\RawMaterialModel;
+use App\Model\UnitMeasurementModel;
 
-$app->group('/raw', function () {
+$app->group('/unit', function () {
 
     $this->get('', function ($req, $res, $args) {
-        $um = new RawMaterialModel();
+        $um = new UnitMeasurementModel();
 
         $res
             ->getBody()
@@ -22,7 +22,7 @@ $app->group('/raw', function () {
     });
 
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new RawMaterialModel();
+        $um = new UnitMeasurementModel();
 
         $res
             ->getBody()
@@ -39,7 +39,7 @@ $app->group('/raw', function () {
     });
 
     $this->post('/', function ($req, $res) {
-        $um = new RawMaterialModel();
+        $um = new UnitMeasurementModel();
 
         $res
             ->getBody()
@@ -58,7 +58,7 @@ $app->group('/raw', function () {
     });
 
     $this->put('/', function ($req, $res) {
-        $um = new RawMaterialModel();
+        $um = new UnitMeasurementModel();
 
         $res
             ->getBody()
@@ -77,7 +77,7 @@ $app->group('/raw', function () {
     });
 
     $this->delete('/{id}', function ($req, $res, $args) {
-        $um = new RawMaterialModel();
+        $um = new UnitMeasurementModel();
 
         $res
             ->getBody()
