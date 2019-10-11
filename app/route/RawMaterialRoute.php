@@ -1,10 +1,10 @@
 <?php
-use App\Model\RawMaterialRoute;
+use App\Model\RawMaterialModell;
 
 $app->group('/raws', function () {
 
     $this->get('', function ($req, $res, $args) {
-        $um = new RawMaterialRoute();
+        $um = new RawMaterialModel();
 
         $res
             ->getBody()
@@ -22,7 +22,7 @@ $app->group('/raws', function () {
     });
 
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new RawMaterialRoute();
+        $um = new RawMaterialModel();
 
         $res
             ->getBody()
@@ -39,7 +39,7 @@ $app->group('/raws', function () {
     });
 
     $this->post('/', function ($req, $res) {
-        $um = new RawMaterialRoute();
+        $um = new RawMaterialModel();
 
         $res
             ->getBody()
@@ -58,7 +58,7 @@ $app->group('/raws', function () {
     });
 
     $this->put('/', function ($req, $res) {
-        $um = new RawMaterialRoute();
+        $um = new RawMaterialModel();
 
         $res
             ->getBody()
@@ -77,7 +77,7 @@ $app->group('/raws', function () {
     });
 
     $this->delete('/{id}', function ($req, $res, $args) {
-        $um = new RawMaterialRoute();
+        $um = new RawMaterialModel();
 
         $res
             ->getBody()
