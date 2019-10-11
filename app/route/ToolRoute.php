@@ -21,6 +21,7 @@ $app->group('/tools', function () {
         );
 
     });
+    
     $this->get('/{id}', function ($req, $res, $args) {
         $um = new ToolModel();
 
