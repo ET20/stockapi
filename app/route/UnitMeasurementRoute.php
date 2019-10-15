@@ -28,7 +28,7 @@ $app->group('/units', function () {
     });
 
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new Model();
+        $um = new UnitMeasurementModel ();
 
         $res
             ->getBody()

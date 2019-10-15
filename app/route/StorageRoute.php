@@ -10,7 +10,7 @@ $app->group('/storage', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $modelo->GetAll() // Qué función usaré de mi modelo
+                    $modelo->GetAll() // Qué función usaré de mi modelojjnkjnkjnknk
                 )
             );
 

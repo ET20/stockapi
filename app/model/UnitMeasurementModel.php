@@ -66,7 +66,7 @@ class UnitMeasurementModel {
     public function Insert($data)
     {
         try {
-            $sql = "INSERT INTO $this->tooltbl
+            $sql = "INSERT INTO $this->unitm
                     (nombre, descripcion)
                     VALUES (?,?);";
 
@@ -92,7 +92,7 @@ class UnitMeasurementModel {
     {
         try {
             if (isset($data['idunidadmedida'])) {
-                $sql = "UPDATE $this->tooltbl SET
+                $sql = "UPDATE $this->unitm SET
                             nombre      = ?,
                             descripcion = ?,                            
 
@@ -124,7 +124,7 @@ class UnitMeasurementModel {
         try
         {
             $stm = $this->db
-                ->prepare("DELETE FROM $this->tooltbl WHERE idunidadmedida = ?");
+                ->prepare("DELETE FROM $this->unitm WHERE idunidadmedida = ?");
 
             $stm->execute(array($id));
 

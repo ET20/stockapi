@@ -19,7 +19,7 @@ class ProductionModel { //Nombre de la clase
     }
 
     //Función que recupera todos los item de Produccion
-    public function GetAllProduction() {
+    public function GetAll() {
         try {
             //Consulta SQL que ejecutaremos
             //statement = consulta = consulta
@@ -152,7 +152,11 @@ public function Delete($id) {
     {
         $stm = $this->db
             ->prepare(" DELETE FROM $this->dbPr
+<<<<<<< HEAD
             WHERE $this->dbPrId = ?");
+=======
+            WHERE $this->dbPr.$this->dbPrId = ?");
+>>>>>>> 99de8644842274dd6b794c28e10797ee3d94c8c8
 
         $stm->execute(array ( $id)   );
 
