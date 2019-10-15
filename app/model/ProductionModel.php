@@ -60,23 +60,49 @@ class ProductionModel { //Nombre de la clase
 }
 
 
-
+//funciona! :)
     public function Insert($data)
     {
+        /*      
+        "idproduccion": "1",
+        "idunidadmedida": null,
+        
+        "lote": "54",
+        "nombre": "54",
+        "fechaactualizado": null,
+        "descripcion": "54",
+        "cantidad": "23.00",
+        "buenestado": null,
+        "monto": null,
+        "fechayhoradeproduccion": null
+        */
+
+
         try {
             $sql = "INSERT INTO $this->dbPr
-                    (nombre,cantidad,descripcion,unidad,buentestado,lote)
-                    VALUES (?,?,?,?,?,?);";
+                    (
+                        idunidadmedida,
+                        lote,
+                        nombre,
+                        fechaactualizado,
+                        descripcion,
+                        cantidad,
+                        buenestado,
+                        monto,
+                        fechayhoradeproduccion
+                    )
+                    VALUES (?,?,?,(select now()),?,?,?,?,(select now()));";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
-                        $data['nombre'],
-                        $data['cantidad'],
-                        $data['descripcion'],
-                        $data['unidad'],
-                        $data['buentestado'],
+                        $data['idunidadmedida'],
                         $data['lote'],
+                        $data['nombre'],
+                        $data['descripcion'],
+                        $data['cantidad'],
+                        $data['buenestado'],
+                        $data['monto']
                     )
                 );
 
@@ -87,17 +113,18 @@ class ProductionModel { //Nombre de la clase
             $this->response->setResponse(false, $e->getMessage());
         }
     }
-
+//funciona
     public function Update($data){
         try{
+
         if (isset($data['idproduccion'])) {
             $sql = "UPDATE $this->dbPr SET
-                        nombre = ?
-                        cantidad  = ?
-                        descripcion = ?
-                        unidad = ?
-                        buentestado = ?
-                        lote = ?
+                        nombre = ?,
+                        descripcion = ?,
+                        cantidad  = ?,
+                        buenestado = ?,
+                        monto = ?,
+                        fechaactualizado = (select now())
                     WHERE idproduccion = ?";
 
             $id = intval($data['idproduccion']);
@@ -105,11 +132,10 @@ class ProductionModel { //Nombre de la clase
                 ->execute(
                     array(
                         $data['nombre'],
-                        $data['cantidad'],
                         $data['descripcion'],
-                        $data['unidad'],
-                        $data['buentestado'],
-                        $data['lote'],
+                        $data['cantidad'],
+                        $data['buenestado'],
+                        $data['monto'],
                         $id,
                     )
                 );
@@ -125,10 +151,10 @@ public function Delete($id) {
     try
     {
         $stm = $this->db
-            ->prepare(" DELETE FROM $this->dbPr 
+            ->prepare(" DELETE FROM $this->dbPr
             WHERE $this->dbPrId = ?");
 
-        $stm->execute(array($id));
+        $stm->execute(array ( $id)   );
 
         $this->response->setResponse(true);
         return $this->response;

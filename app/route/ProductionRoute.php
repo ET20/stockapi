@@ -56,6 +56,8 @@ $app->group('/productions', function () {
     });
     */
 
+
+    //funciona
     $this->post('/', function ($req, $res) {
         $um = new ProductionModel();
 
@@ -74,6 +76,7 @@ $app->group('/productions', function () {
             );
     });
 
+
     $this->put('/', function ($req, $res) {
         $um = new ProductionModel();
 
@@ -87,12 +90,13 @@ $app->group('/productions', function () {
                 json_encode(
                     $um->Update(
                         $req->getParsedBody()
+                        //$um->Get($args['id'])
                     )
                 )
             );
     });
 
-    $this->delete('/{id}', function ($req, $res) {
+    $this->delete('/{id}', function ($req, $res, $args) {
         $um = new ProductionModel();
 
         return $res
@@ -104,7 +108,7 @@ $app->group('/productions', function () {
             ->write(
                 json_encode(
                     $um->Delete(
-                        $req->getParsedBody()
+                        $args['id']
                     )
                 )
             );
