@@ -6,7 +6,7 @@ use App\Lib\Response; //Importamos el archivo que arma la respuesta
 
 class ContainerModel { //Nombre de la clase
     private $db;
-    private $container = 'envase';
+    private $container = '';
     private $response;
 
     //Construimos la clase ContainerModelo
@@ -15,7 +15,7 @@ class ContainerModel { //Nombre de la clase
         $this->response = new Response();
     }
 
-    public function GetAll($id) {
+    public function Get($id) {
         try 
         {
             $result = array();
@@ -78,20 +78,21 @@ class ContainerModel { //Nombre de la clase
     {
         try {
             $sql = "INSERT INTO $this->envase
-                    ((idenvase, idmaterial, capacidad, nombre, descripcion, cantidad, unidad, buenestado)
-                    VALUES (?,?,?,?,?,?,?,?);";
+                    ((idenvase, idunidadmedida, marca, modelo, descripcion, cantidad, buenestado,monto ,fechaactualizado)
+                    VALUES (?,?,?,?,?,?,?,?,?);";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
                         $data['idenvase'],
-                        $data['idmaterial'],
-                        $data['capacidad'],
-                        $data['nombre'],
+                        $data['idunidadmedida'],
+                        $data['marca'],
+                        $data['modelo'],
                         $data['descripcion'],
                         $data['cantidad'],
-                        $data['unidad'],
                         $data['buenestado'],
+                        $data['monto'],
+                        $data['fechaactualizado'],
                     )
                 );
 
@@ -107,14 +108,14 @@ class ContainerModel { //Nombre de la clase
             if (isset($data['idenvase'])) {
                 $sql = "UPDATE $this->envase SET
                             idenvase    = ?, 
-                            idmaterial  = ?,
-                            capacidad   = ?,
-                            nombre      = ?,
+                            idunidadmedida  = ?,
+                            marca = ?,
+                            modelo = ?,
                             descripcion = ?,
                             cantidad    = ?,
-                            unidad      = ?,
                             buenestado  = ?
-
+                            monto = ?,
+                            fechaactualizado = ?,
                         WHERE idenvase = ?";
 
                 $idenvase = intval($data['idenvase']);
@@ -122,13 +123,14 @@ class ContainerModel { //Nombre de la clase
                     ->execute(
                         array(
                             $data['idenvase'],
-                            $data['idmaterial'],
-                            $data['capacidad'],
-                            $data['nombre'],
+                            $data['idunidadmedida'],
+                            $data['marca'],
+                            $data['modelo'],
                             $data['descripcion'],
                             $data['cantidad'],
-                            $data['unidad'],
                             $data['buenestado'],
+                            $data['monto'],
+                            $data['fechaactualizado'],
                             $idenvase,
                         )
                     );

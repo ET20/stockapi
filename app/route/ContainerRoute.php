@@ -2,9 +2,9 @@
 use App\Model\ContainerModel;
 
 //Corregir esto!
-$app->group('/envase', function () {
+$app->group('/container', function () {
 
-    $this->Get('/{id}', function ($req, $res, $args) {
+    $this->get('/{id}', function ($req, $res, $args) {
         $um = new ContainerModel();
 
         $res
@@ -20,7 +20,7 @@ $app->group('/envase', function () {
         );
 
     });
-    $this->Get('', function ($req, $res, $args) {
+    $this->get('', function ($req, $res, $args) {
         $um = new ContainerModel();
 
         $res
@@ -74,7 +74,7 @@ $app->group('/envase', function () {
         );
     });
 
-    $this->Delete('/{id}', function ($req, $res, $args) {
+    $this->delete('/{id}', function ($req, $res, $args) {
         $um = new ContainerModel();
 
         $res
