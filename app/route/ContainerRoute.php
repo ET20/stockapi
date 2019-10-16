@@ -27,7 +27,7 @@ $app->group('/envase', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $um->Get()
+                    $um->GetAll()
                 )
             );
         return $res->withHeader(
