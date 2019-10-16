@@ -79,7 +79,7 @@ class ContainerModel { //Nombre de la clase
         try {
             $sql = "INSERT INTO $this->envase
                     ((idenvase, idunidadmedida, marca, modelo, descripcion, cantidad, buenestado,monto ,fechaactualizado)
-                    VALUES (?,?,?,?,?,?,?,?,?);";
+                    VALUES (?,?,?,?,?,?,?,?,?)(select now());";
 
             $this->db->prepare($sql)
                 ->execute(
@@ -115,7 +115,7 @@ class ContainerModel { //Nombre de la clase
                             cantidad    = ?,
                             buenestado  = ?
                             monto = ?,
-                            fechaactualizado = ?,
+                            fechaactualizado = (select now()),
                         WHERE idenvase = ?";
 
                 $idenvase = intval($data['idenvase']);
