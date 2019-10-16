@@ -65,7 +65,7 @@ class ToolModel
         }
     }
 
-    /*Create new herramienta*/
+    /*funciona*/
     public function Insert($data)
     {
         try {
@@ -92,8 +92,7 @@ class ToolModel
                         $data['descripcion'],
                         $data['cantidad'],
                         $data['buenestado'],
-                        $data['monto'],
-                        $data['fechaactualizado']
+                        $data['monto']           
 
                        
                     )

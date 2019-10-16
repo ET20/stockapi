@@ -38,7 +38,7 @@ $app->group('/tools', function () {
         );
 
     });
-
+/*funciona*/
     $this->post('/', function ($req, $res) {
         $um = new ToolModel();
 
