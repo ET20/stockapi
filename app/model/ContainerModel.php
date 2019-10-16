@@ -44,7 +44,7 @@ class ContainerModel { //Nombre de la clase
 
 
     }
-    public function Get() {
+    public function GetAll() {
         try 
         {
             $result = array();
@@ -58,7 +58,7 @@ class ContainerModel { //Nombre de la clase
             $stm->execute();
 
             $this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
+            $this->response->result = $stm->fetchAll();
         
             
            
