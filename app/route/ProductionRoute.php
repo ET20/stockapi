@@ -10,7 +10,7 @@ $app->group('/productions', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $modelo->GetAllProduction() // Qué función usaré de mi modelo
+                    $modelo->GetAll() // Qué función usaré de mi modelo
                 )
             );
 
@@ -28,7 +28,7 @@ $app->group('/productions', function () {
             ->getBody()
             ->write(
                 json_encode(
-                    $um->Get($args['id'])
+                    $um->get($args['id'])
                 )
             );
         return $res->withHeader(
@@ -37,7 +37,7 @@ $app->group('/productions', function () {
         );
 
     });
-
+/*
     $this->get('/tree/{id}', function ($req, $res, $args) {
         $um = new Familyproduccion();
 
@@ -54,9 +54,12 @@ $app->group('/productions', function () {
         );
 
     });
+    */
 
-    $this->post('', function ($req, $res) {
-        $um = new Familyproduccion();
+
+    //funciona
+    $this->post('/', function ($req, $res) {
+        $um = new ProductionModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -73,8 +76,9 @@ $app->group('/productions', function () {
             );
     });
 
-    $this->put('', function ($req, $res) {
-        $um = new Familyproduccion();
+
+    $this->put('/', function ($req, $res) {
+        $um = new ProductionModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -86,13 +90,14 @@ $app->group('/productions', function () {
                 json_encode(
                     $um->Update(
                         $req->getParsedBody()
+                        //$um->Get($args['id'])
                     )
                 )
             );
     });
 
-    $this->delete('', function ($req, $res) {
-        $um = new Familyproduccion();
+    $this->delete('/{id}', function ($req, $res, $args) {
+        $um = new ProductionModel();
 
         return $res
             ->withHeader('Access-Control-Allow-Origin', '*')
@@ -103,7 +108,7 @@ $app->group('/productions', function () {
             ->write(
                 json_encode(
                     $um->Delete(
-                        $req->getParsedBody()
+                        $args['id']
                     )
                 )
             );

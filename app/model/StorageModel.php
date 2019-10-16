@@ -49,63 +49,77 @@ class StorageModel{
             return $this->response;
         }
     }
-/*
-    public function InsertOrUpdate($data) {
+
+
+    public function Insert($data)
+    {
         try {
-            if(isset($data['idalmacen'])) {
-                $sql = "UPDATE $this->stro SET 
-                            idalmacen   =?,
-                            ubicacion   =?,
-                            capacidad   =?,
-                            tipo        =?,
-                            nombre      =?,
-                        WHERE idalmacen =?";
-                $idal = intval($data['idalmacen']);
-                $this->db->prepare($sql)
-                    ->execute(
-                        array(
-                            $data['idalmacen'], 
-                            $data['ubicacion'],
-                            $data['capacidad'],
-                            $data['tipo'],
-                            $data['nombre'],
-                            $idal
-                        )
-                    );
-            } else {
-                $sql = "INSERT INTO $this->stro 
-                            (
-                                idalmacen,
-                                ubicacion,
-                                capacidad,
-                                tipo,
-                                nombre,
-                            ) 
-                            VALUES (
-                                ?, 
-                                ?, 
-                                ?, 
-                                ?, 
-                                ?, 
-                            );";
-                
-                $this->db->prepare($sql)
-                     ->execute(
-                        array(
-                            $data['idalmacen'], 
-                            $data['ubicacion'],
-                            $data['capacidad'],
-                            $data['tipo'],
-                            $data['nombre']
-                        )
-                    ); 
-            }
-            
+            $stm = "INSERT INTO $this->stro
+                    (ubicacion,capacidad,tipo,nombre)
+                    VALUES (?,?,?,?);";
+
+            $this->db->prepare($stm)
+                ->execute(
+                    array(
+                        $data['ubicacion'],
+                        $data['capacidad'],
+                        $data['tipo'],
+                        $data['nombre']
+                    )
+                );
+
             $this->response->setResponse(true);
             return $this->response;
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
         }
     }
-    */
+
+    public function Update($data){
+        try{
+        if (isset($data['idalmacen'])) {
+            $sql = "UPDATE $this->stro SET
+                        ubicacion     = ?,
+                        capacidad     = ?,
+                        tipo          = ?,
+                        nombre        = ?
+                    WHERE idAlmacen = ?";
+
+            $id = intval($data['idalmacen']);
+            $this->db->prepare($sql)
+                ->execute(
+                    array(
+                        $data['ubicacion'],
+                        $data['capacidad'],
+                        $data['tipo'],
+                        $data['nombre'],
+                        $id,
+                    )
+                );
+            }
+            $this->response->setResponse(true);
+            return $this->response;
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+
+
+
+    public function delete($id) {
+        try
+        {
+            $stm = $this->db
+                ->prepare("DELETE FROM $this->stro WHERE idalmacen = ?");
+
+            $stm->execute(array($id));
+
+            $this->response->setResponse(true);
+            return $this->response;
+
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+    
 }

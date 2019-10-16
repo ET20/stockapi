@@ -1,29 +1,11 @@
-<?php
-use App\Model\ToolModel;
+ <?php
+use App\Model\ContainerModel;
 
-$app->group('/tools', function () {
+//Corregir esto!
+$app->group('/envase', function () {
 
-    
-    $this->get('', function ($req, $res, $args) {
-        $um = new ToolModel();
-
-        $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->GetAll()
-                )
-            );
-
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
-
-    });
-    
-    $this->get('/{id}', function ($req, $res, $args) {
-        $um = new ToolModel();
+    $this->Get('/{id}', function ($req, $res, $args) {
+        $um = new ContainerModel();
 
         $res
             ->getBody()
@@ -38,9 +20,24 @@ $app->group('/tools', function () {
         );
 
     });
+    $this->Get('', function ($req, $res, $args) {
+        $um = new ContainerModel();
 
+        $res
+            ->getBody()
+            ->write(
+                json_encode(
+                    $um->Get()
+                )
+            );
+        return $res->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
+
+    });
     $this->post('/', function ($req, $res) {
-        $um = new ToolModel();
+        $um = new ContainerModel();
 
         $res
             ->getBody()
@@ -57,9 +54,9 @@ $app->group('/tools', function () {
             'application/json; charset=utf-8'
         );
     });
-
+ 
     $this->put('/', function ($req, $res) {
-        $um = new ToolModel();
+        $um = new ContainerModel();
 
         $res
             ->getBody()
@@ -77,8 +74,8 @@ $app->group('/tools', function () {
         );
     });
 
-    $this->delete('/{id}', function ($req, $res, $args) {
-        $um = new ToolModel();
+    $this->Delete('/{id}', function ($req, $res, $args) {
+        $um = new ContainerModel();
 
         $res
             ->getBody()
@@ -95,3 +92,4 @@ $app->group('/tools', function () {
     });
 
 });
+//aa

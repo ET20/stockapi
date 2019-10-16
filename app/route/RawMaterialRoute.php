@@ -1,7 +1,7 @@
 <?php
 use App\Model\RawMaterialModel;
 
-$app->group('/raw', function () {
+$app->group('/raws', function () {
 
     $this->get('', function ($req, $res, $args) {
         $um = new RawMaterialModel();

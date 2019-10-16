@@ -19,7 +19,7 @@ class ProductionModel { //Nombre de la clase
     }
 
     //Función que recupera todos los item de Produccion
-    public function GetAllProduction() {
+    public function GetAll() {
         try {
             //Consulta SQL que ejecutaremos
             //statement = consulta = consulta
@@ -30,7 +30,7 @@ class ProductionModel { //Nombre de la clase
             );
             $stmp->execute(); 
             $this->response->setResponse(true);
-            $this->response->result_production = $stmp->fetchAll();
+            $this->response->result = $stmp->fetchAll();
             return $this->response;} catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;}
@@ -46,8 +46,8 @@ class ProductionModel { //Nombre de la clase
 */
     public function Get($id) {
         try {   
-            $stm = $this->db->prepare( "SELECT p.* FROM produccion p 
-                        WHERE p.idproduccion = ?
+            $stm = $this->db->prepare( "SELECT dbpr.* FROM $this->dbPr dbpr
+                        WHERE dbpr.$this->dbPrId = ?
                  ");
 
 
@@ -60,52 +60,86 @@ class ProductionModel { //Nombre de la clase
 }
 
 
-
+//funciona! :)
     public function Insert($data)
     {
+        /*      
+        "idproduccion": "1",
+        "idunidadmedida": null,
+        
+        "lote": "54",
+        "nombre": "54",
+        "fechaactualizado": null,
+        "descripcion": "54",
+        "cantidad": "23.00",
+        "buenestado": null,
+        "monto": null,
+        "fechayhoradeproduccion": null
+        */
+
+
         try {
             $sql = "INSERT INTO $this->dbPr
-                    (nombre, descripcion, cantidad, unidad, buenestado)
-                    VALUES (?,?,?,?,?);";
+                    (
+                        idunidadmedida,
+                        lote,
+                        nombre,
+                        fechaactualizado,
+                        descripcion,
+                        cantidad,
+                        buenestado,
+                        monto,
+                        fechayhoradeproduccion
+                    )
+                    VALUES (?,?,?,(select now()),?,?,?,?,(select now()));";
 
+            $this->db->prepare($sql)
+                ->execute(
+                    array(
+                        $data['idunidadmedida'],
+                        $data['lote'],
+                        $data['nombre'],
+                        $data['descripcion'],
+                        $data['cantidad'],
+                        $data['buenestado'],
+                        $data['monto']
+                    )
+                );
+
+            $this->response->setResponse(true);
+
+            return $this->response;
+        } catch (Exception $e) {
+            $this->response->setResponse(false, $e->getMessage());
+        }
+    }
+//funciona
+    public function Update($data){
+        try{
+
+        if (isset($data['idproduccion'])) {
+            $sql = "UPDATE $this->dbPr SET
+                        nombre = ?,
+                        descripcion = ?,
+                        cantidad  = ?,
+                        buenestado = ?,
+                        monto = ?,
+                        fechaactualizado = (select now())
+                    WHERE idproduccion = ?";
+
+            $id = intval($data['idproduccion']);
             $this->db->prepare($sql)
                 ->execute(
                     array(
                         $data['nombre'],
                         $data['descripcion'],
                         $data['cantidad'],
-                        $data['unidad'],
                         $data['buenestado'],
+                        $data['monto'],
+                        $id,
                     )
                 );
-
-            $this->response->setResponse(true);
-
-            return $this->response;
-        } catch (Exception $e) {
-            $this->response->setResponse(false, $e->getMessage());
-        }
-    }
-
-    public function Update($data)
-    {
-        try
-        {
-            $sql = "UPDATE $this->familygrouptbl
-            SET
-                relationship = ?,
-                datetime = (select now())
-            WHERE (childmember = ?) and (parentmember = ?)";
-
-            $this->db->prepare($sql)
-                ->execute(
-                    array(
-                        $data['relationship'],
-                        $data['childmember'],
-                        $data['parentmember'],
-                    )
-                );
-
+            }
             $this->response->setResponse(true);
             return $this->response;
         } catch (Exception $e) {
@@ -113,26 +147,25 @@ class ProductionModel { //Nombre de la clase
         }
     }
 
-
-
-    public function Delete($data)
+public function Delete($id) {
+    try
     {
-		try 
-		{
-			$stm = $this->db
-			            ->prepare("DELETE FROM $this->familygrouptbl WHERE (childmember = ?) and (parentmember = ?)");			          
+        $stm = $this->db
+            ->prepare(" DELETE FROM $this->dbPr
+<<<<<<< HEAD
+            WHERE $this->dbPrId = ?");
+=======
+            WHERE $this->dbPr.$this->dbPrId = ?");
+>>>>>>> 99de8644842274dd6b794c28e10797ee3d94c8c8
 
-			$stm->execute(
-                array(
-                        $data['childmember'],
-                        $data['parentmember'],
-                    ));
-            
-			$this->response->setResponse(true);
-            return $this->response;
-		} catch (Exception $e) 
-		{
-			$this->response->setResponse(false, $e->getMessage());
-		}
+        $stm->execute(array ( $id)   );
+
+        $this->response->setResponse(true);
+        return $this->response;
+
+    } catch (Exception $e) {
+        $this->response->setResponse(false, $e->getMessage());
     }
+}
+
 }

@@ -1,17 +1,16 @@
 <?php
-use App\Model\ToolModel;
+use App\Model\StorageModel;
 
-$app->group('/tools', function () {
+$app->group('/storage', function () {
 
-    
     $this->get('', function ($req, $res, $args) {
-        $um = new ToolModel();
+        $modelo = new StorageModel();
 
         $res
             ->getBody()
             ->write(
                 json_encode(
-                    $um->GetAll()
+                    $modelo->GetAll() // Qué función usaré de mi modelojjnkjnkjnknk
                 )
             );
 
@@ -21,9 +20,9 @@ $app->group('/tools', function () {
         );
 
     });
-    
+
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new ToolModel();
+        $um = new StorageModel();
 
         $res
             ->getBody()
@@ -40,18 +39,18 @@ $app->group('/tools', function () {
     });
 
     $this->post('/', function ($req, $res) {
-        $um = new ToolModel();
-
+        $um = new StorageModel();
+        
         $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->Insert(
-                        $req->getParsedBody()
-                    )
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Insert(
+                    $req->getParsedBody()
                 )
-            );
-
+            )
+        );
+        
         return $res->withHeader(
             'Content-type',
             'application/json; charset=utf-8'
@@ -59,18 +58,18 @@ $app->group('/tools', function () {
     });
 
     $this->put('/', function ($req, $res) {
-        $um = new ToolModel();
-
+        $um = new StorageModel();
+        
         $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->Update(
-                        $req->getParsedBody()
-                    )
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Update(
+                    $req->getParsedBody()
                 )
-            );
-
+            )
+        );
+        
         return $res->withHeader(
             'Content-type',
             'application/json; charset=utf-8'
@@ -78,7 +77,7 @@ $app->group('/tools', function () {
     });
 
     $this->delete('/{id}', function ($req, $res, $args) {
-        $um = new ToolModel();
+        $um = new StorageModel();
 
         $res
             ->getBody()
