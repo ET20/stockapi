@@ -37,24 +37,6 @@ $app->group('/productions', function () {
         );
 
     });
-/*
-$this->get('/tree/{id}', function ($req, $res, $args) {
-$um = new Familyproduccion();
-
-$res
-->getBody()
-->write(
-json_encode(
-$um->GetTree($args['id'])
-)
-);
-return $res->withHeader(
-'Content-type',
-'application/json; charset=utf-8'
-);
-
-});
- */
 
     //funciona
     $this->post('/', function ($req, $res) {
@@ -88,7 +70,6 @@ return $res->withHeader(
                 json_encode(
                     $um->Update(
                         $req->getParsedBody()
-                        //$um->Get($args['id'])
                     )
                 )
             );
