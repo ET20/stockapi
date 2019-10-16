@@ -23,8 +23,7 @@ class ToolModel
         try {
            
                 $stm = $this->db->prepare(
-                    "SELECT                        
-                   * FROM herramienta"
+                    "SELECT * FROM herramienta"
                     
                     );
 
@@ -45,7 +44,6 @@ class ToolModel
             return $this->response;
             }
     }
-
     /**/
     public function Get($id)
     {

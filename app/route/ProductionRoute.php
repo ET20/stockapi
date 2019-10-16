@@ -3,7 +3,7 @@ use App\Model\ProductionModel;
 //llamar como productions
 $app->group('/productions', function () {
 
-    $this->get('/', function ($req, $res, $args) {
+    $this->get('', function ($req, $res, $args) {
         $modelo = new ProductionModel();
 
         $res
@@ -37,25 +37,8 @@ $app->group('/productions', function () {
         );
 
     });
-/*
-    $this->get('/tree/{id}', function ($req, $res, $args) {
-        $um = new Familyproduccion();
 
-        $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->GetTree($args['id'])
-                )
-            );
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
-
-    });
-    */
-
+    //funciona
     $this->post('/', function ($req, $res) {
         $um = new ProductionModel();
 
@@ -92,7 +75,7 @@ $app->group('/productions', function () {
             );
     });
 
-    $this->delete('/{id}', function ($req, $res) {
+    $this->delete('/{id}', function ($req, $res, $args) {
         $um = new ProductionModel();
 
         return $res
@@ -104,7 +87,7 @@ $app->group('/productions', function () {
             ->write(
                 json_encode(
                     $um->Delete(
-                        $req->getParsedBody()
+                        $args['id']
                     )
                 )
             );

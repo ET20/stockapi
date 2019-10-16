@@ -1,7 +1,6 @@
 <?php
 use App\Model\UnitMeasurementModel;
 
-
 $app->group('/units', function () {
 
     //sadasda$this->get('test', function ($req, $res, $args) {
@@ -28,7 +27,7 @@ $app->group('/units', function () {
     });
 
     $this->get('/{id}', function ($req, $res, $args) {
-        $um = new Model();
+        $um = new UnitMeasurementModel ();
 
         $res
             ->getBody()

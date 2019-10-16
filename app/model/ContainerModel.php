@@ -15,7 +15,7 @@ class ContainerModel { //Nombre de la clase
         $this->response = new Response();
     }
 
-    public function Get($id) {
+    public function GetAll($id) {
         try 
         {
             $result = array();
@@ -73,6 +73,7 @@ class ContainerModel { //Nombre de la clase
 
 
     }
+
     public function Insert($data)
     {
         try {
@@ -161,6 +162,7 @@ class ContainerModel { //Nombre de la clase
 
 
 }
+
 
 
 //aa
