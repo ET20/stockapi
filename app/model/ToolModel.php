@@ -65,24 +65,37 @@ class ToolModel
         }
     }
 
-    /*Create new Raw Material*/
+    /*Create new herramienta*/
     public function Insert($data)
     {
         try {
             $sql = "INSERT INTO $this->tooltbl
-                    (nombre, descripcion, cantidad, unidad, buenestado, marca, modelo)
-                    VALUES (?,?,?,?,?,?,?);";
+            ( idunidadmedida, 
+            marca, 
+            modelo, 
+            nombre, 
+            descripcion, 
+            cantidad, 
+            buenestado, 
+            monto, 
+            fechaactualizado)
+
+                    VALUES (?,?,?,?,?,?,?,?,(select now()));";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
+                        $data['idunidadmedida'],
+                        $data['marca'],
+                        $data['modelo'],
                         $data['nombre'],
                         $data['descripcion'],
                         $data['cantidad'],
-                        $data['unidad'],
                         $data['buenestado'],
-                        $data['marca'],
-                        $data['modelo'],
+                        $data['monto'],
+                        $data['fechaactualizado']
+
+                       
                     )
                 );
 
@@ -94,19 +107,21 @@ class ToolModel
         }
     }
 
-    /*Update a Raw Material by its id*/
+    /*Update a  by its id*/
     public function Update($data)
     {
         try {
             if (isset($data['idherramienta'])) {
                 $sql = "UPDATE $this->tooltbl SET
-                            nombre      = ?,
-                            descripcion = ?,
-                            cantidad    = ?,
-                            unidad      = ?,
-                            buenestado  = ?,
-                            marca       = ?,
-                            modelo      = ?s
+                            idunidadmedida=? 
+                            marca=? 
+                            modelo=? 
+                            nombre, 
+                            descripcion=? 
+                            cantidad=? 
+                            buenestado=? 
+                            monto=? 
+                            fechaactualizado=(select now())
 
                         WHERE idherramienta = ?";
 
@@ -114,13 +129,15 @@ class ToolModel
                 $this->db->prepare($sql)
                     ->execute(
                         array(
+                            $data['idunidadmedida'],
+                            $data['marca'],
+                            $data['modelo'],
                             $data['nombre'],
                             $data['descripcion'],
                             $data['cantidad'],
-                            $data['unidad'],
                             $data['buenestado'],
-                            $data['marca'],
-                            $data['modelo'],
+                            $data['monto'],
+                            $data['fechaactualizado'],
                             $idherramienta,
                         )
                     );
@@ -135,7 +152,7 @@ class ToolModel
         }
     }
 
-    /*Delete a tools by its idsadasdas*/
+    /*Delete a tools by id*/
     public function Delete($id)
     {
         try

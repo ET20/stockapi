@@ -62,7 +62,7 @@ class UnitMeasurementModel {
         }
     }
 
-    /*Create new Raw Material*/
+    /*Create new UnitMeasurement*/
     public function Insert($data)
     {
         try {
@@ -87,7 +87,7 @@ class UnitMeasurementModel {
         }
     }
 
-    /*Update a Raw Material by its id*/
+    /*Update a UnitMeasurement by its id*/
     public function Update($data)
     {
         try {
@@ -118,7 +118,7 @@ class UnitMeasurementModel {
         }
     }
 
-    /*Delete a tools by its idsadasdas*/
+    /*Delete a tools by id*/
     public function Delete($id)
     {
         try
