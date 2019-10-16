@@ -9,9 +9,7 @@ class ProductionModel
 { //Nombre de la clase
     private $db;
     private $dbPr = 'produccion';
-    private $dbPv = "precioventa";
     private $dbPrId = "idproduccion";
-    private $dbPvId = "idprecioventa";
     private $response;
 
     //Construimos la clase ProduccionModelo
@@ -40,14 +38,6 @@ class ProductionModel
             return $this->response;}
     }
 
-/*
-"SELECT
-dbPr.*,dbPv.* FROM $this->dbPr dbPr , $this->dbPv dbPv
-WHERE $this->dbPrId = ?
-join $this->dbPv dbPv  on dbPv.$this->dbPvId = dbPr.$this->dbPrId
-
-"
- */
     public function Get($id)
     {
         try {
@@ -64,21 +54,10 @@ join $this->dbPv dbPv  on dbPv.$this->dbPvId = dbPr.$this->dbPrId
     }
 
 //funciona! :)
+// unidad medida del 1 - 4
+
     public function Insert($data)
     {
-        /*
-        "idproduccion": "1",
-        "idunidadmedida": null,
-
-        "lote": "54",
-        "nombre": "54",
-        "fechaactualizado": null,
-        "descripcion": "54",
-        "cantidad": "23.00",
-        "buenestado": null,
-        "monto": null,
-        "fechayhoradeproduccion": null
-         */
 
         try {
             $sql = "INSERT INTO $this->dbPr
