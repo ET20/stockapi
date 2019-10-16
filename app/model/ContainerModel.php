@@ -6,7 +6,7 @@ use App\Lib\Response; //Importamos el archivo que arma la respuesta
 
 class ContainerModel { //Nombre de la clase
     private $db;
-    private $container = '';
+    private $container = 'envase';
     private $response;
 
     //Construimos la clase ContainerModelo
