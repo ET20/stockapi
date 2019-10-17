@@ -1,9 +1,9 @@
  <?php
 use App\Model\ContainerModel;
 
-//Corregir esto!
-$app->group('/envase', function () {
-
+//
+$app->group('/container', function () {
+//funciona.
     $this->get('/{id}', function ($req, $res, $args) {
         $um = new ContainerModel();
 
@@ -20,6 +20,7 @@ $app->group('/envase', function () {
         );
 
     });
+    //funciona.
     $this->get('', function ($req, $res, $args) {
         $um = new ContainerModel();
 
@@ -38,11 +39,12 @@ $app->group('/envase', function () {
     });
     $this->post('/', function ($req, $res) {
         $um = new ContainerModel();
-        return $res      
-        ->withHeader('Access-Control-Allow-Origin', '*')
-        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
-        ->withHeader('Content-type', 'application/json')
+
+        return $res
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->withHeader('Content-type', 'application/json')
             ->getBody()
             ->write(
                 json_encode(
@@ -51,10 +53,8 @@ $app->group('/envase', function () {
                     )
                 )
             );
-
-        
     });
- 
+    
     $this->put('/', function ($req, $res) {
         $um = new ContainerModel();
 

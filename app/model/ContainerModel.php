@@ -73,26 +73,32 @@ class ContainerModel { //Nombre de la clase
 
 
     }
-
+//funciona.
     public function Insert($data)
     {
         try {
-            $sql = "INSERT INTO $this->envase
-                    ((idenvase, idunidadmedida, marca, modelo, descripcion, cantidad, buenestado,monto ,fechaactualizado)
-                    VALUES (?,?,?,?,?,?,?,?,?)(select now());";
+            $sql = "INSERT INTO envase(idunidadmedida, marca, modelo, descripcion, cantidad, buenestado,monto,fechaactualizado)
+            VALUES (
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                (select now())
+            );";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
-                        $data['idenvase'],
                         $data['idunidadmedida'],
                         $data['marca'],
                         $data['modelo'],
                         $data['descripcion'],
                         $data['cantidad'],
                         $data['buenestado'],
-                        $data['monto'],
-                        $data['fechaactualizado'],
+                        $data['monto']
                     )
                 );
 
@@ -102,27 +108,29 @@ class ContainerModel { //Nombre de la clase
             $this->response->setResponse(false, $e->getMessage());
         }
     }
+
+
+
     public function Update($data)
     {
         try {
             if (isset($data['idenvase'])) {
-                $sql = "UPDATE $this->envase SET
-                            idenvase    = ?, 
+                $sql = "UPDATE $this->container set
+                            
                             idunidadmedida  = ?,
                             marca = ?,
                             modelo = ?,
                             descripcion = ?,
                             cantidad    = ?,
-                            buenestado  = ?
+                            buenestado  = ?,
                             monto = ?,
-                            fechaactualizado = (select now()),
+                            fechaactualizado = (select now())
                         WHERE idenvase = ?";
 
                 $idenvase = intval($data['idenvase']);
                 $this->db->prepare($sql)
                     ->execute(
                         array(
-                            $data['idenvase'],
                             $data['idunidadmedida'],
                             $data['marca'],
                             $data['modelo'],
@@ -130,8 +138,7 @@ class ContainerModel { //Nombre de la clase
                             $data['cantidad'],
                             $data['buenestado'],
                             $data['monto'],
-                            $data['fechaactualizado'],
-                            $idenvase,
+                            $idenvase
                         )
                     );
             }
@@ -150,7 +157,7 @@ class ContainerModel { //Nombre de la clase
         try
         {
             $stm = $this->db
-                ->prepare("DELETE FROM $this->envase WHERE idenvase = ?");
+                ->prepare("delete from $this->container where idenvase = ?");
 
             $stm->execute(array($id));
 
