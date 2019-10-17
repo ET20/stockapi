@@ -112,14 +112,14 @@ class ToolModel
         try {
             if (isset($data['idherramienta'])) {
                 $sql = "UPDATE $this->tooltbl SET
-                            idunidadmedida=? 
-                            marca=? 
-                            modelo=? 
-                            nombre, 
-                            descripcion=? 
-                            cantidad=? 
-                            buenestado=? 
-                            monto=? 
+                            idunidadmedida=?, 
+                            marca=? ,
+                            modelo=?, 
+                            nombre=? ,
+                            descripcion=? ,
+                            cantidad=? ,
+                            buenestado=? ,
+                            monto=? ,
                             fechaactualizado=(select now())
 
                         WHERE idherramienta = ?";
@@ -136,7 +136,6 @@ class ToolModel
                             $data['cantidad'],
                             $data['buenestado'],
                             $data['monto'],
-                            $data['fechaactualizado'],
                             $idherramienta,
                         )
                     );
