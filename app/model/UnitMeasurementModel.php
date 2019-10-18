@@ -94,7 +94,7 @@ class UnitMeasurementModel {
             if (isset($data['idunidadmedida'])) {
                 $sql = "UPDATE $this->unitm SET
                             nombre      = ?,
-                            descripcion = ?,                            
+                            descripcion = ?                           
 
                         WHERE idunidadmedida = ?";
 

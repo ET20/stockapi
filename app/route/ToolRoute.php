@@ -40,7 +40,7 @@ $app->group('/tools', function () {
     });
 /*funciona*/
 $this->post('/', function ($req, $res) {
-    $um = new ProductionModel();
+    $um = new ToolModel();
 
     return $res
         ->withHeader('Access-Control-Allow-Origin', '*')
