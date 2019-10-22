@@ -15,7 +15,7 @@ class ContainerModel { //Nombre de la clase
         $this->response = new Response();
     }
 
-    public function GetAll($id) {
+    public function Get($id) {
         try 
         {
             $result = array();
@@ -44,10 +44,9 @@ class ContainerModel { //Nombre de la clase
 
 
     }
-
-
-    public function Get() {
-        try {
+    public function GetAll() {
+        try 
+        {
             $result = array();
 
             $stm = $this->db->prepare(
@@ -59,7 +58,7 @@ class ContainerModel { //Nombre de la clase
             $stm->execute();
 
             $this->response->setResponse(true);
-            $this->response->result = $stm->fetch();
+            $this->response->result = $stm->fetchAll();
         
             
            
@@ -74,25 +73,32 @@ class ContainerModel { //Nombre de la clase
 
 
     }
-
+//funciona.
     public function Insert($data)
     {
         try {
-            $sql = "INSERT INTO $this->envase
-                    ((idenvase, idmaterial, capacidad, nombre, descripcion, cantidad, unidad, buenestado)
-                    VALUES (?,?,?,?,?,?,?,?);";
+            $sql = "INSERT INTO envase(idunidadmedida, marca, modelo, descripcion, cantidad, buenestado,monto,fechaactualizado)
+            VALUES (
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                (select now())
+            );";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
-                        $data['idenvase'],
-                        $data['idmaterial'],
-                        $data['capacidad'],
-                        $data['nombre'],
+                        $data['idunidadmedida'],
+                        $data['marca'],
+                        $data['modelo'],
                         $data['descripcion'],
                         $data['cantidad'],
-                        $data['unidad'],
                         $data['buenestado'],
+                        $data['monto']
                     )
                 );
 
@@ -102,35 +108,37 @@ class ContainerModel { //Nombre de la clase
             $this->response->setResponse(false, $e->getMessage());
         }
     }
+
+
+
     public function Update($data)
     {
         try {
             if (isset($data['idenvase'])) {
-                $sql = "UPDATE $this->envase SET
-                            idenvase    = ?, 
-                            idmaterial  = ?,
-                            capacidad   = ?,
-                            nombre      = ?,
+                $sql = "UPDATE $this->container set
+                            
+                            idunidadmedida  = ?,
+                            marca = ?,
+                            modelo = ?,
                             descripcion = ?,
                             cantidad    = ?,
-                            unidad      = ?,
-                            buenestado  = ?
-
+                            buenestado  = ?,
+                            monto = ?,
+                            fechaactualizado = (select now())
                         WHERE idenvase = ?";
 
                 $idenvase = intval($data['idenvase']);
                 $this->db->prepare($sql)
                     ->execute(
                         array(
-                            $data['idenvase'],
-                            $data['idmaterial'],
-                            $data['capacidad'],
-                            $data['nombre'],
+                            $data['idunidadmedida'],
+                            $data['marca'],
+                            $data['modelo'],
                             $data['descripcion'],
                             $data['cantidad'],
-                            $data['unidad'],
                             $data['buenestado'],
-                            $idenvase,
+                            $data['monto'],
+                            $idenvase
                         )
                     );
             }
@@ -149,7 +157,7 @@ class ContainerModel { //Nombre de la clase
         try
         {
             $stm = $this->db
-                ->prepare("DELETE FROM $this->envase WHERE idenvase = ?");
+                ->prepare("delete from $this->container where idenvase = ?");
 
             $stm->execute(array($id));
 
