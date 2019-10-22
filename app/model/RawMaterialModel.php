@@ -22,13 +22,39 @@ class RawMaterialModel
     {
         try {
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table");
+            $stm = $this->db->prepare("SELECT m.idmateriaprima,
+            m.idunidadmedida unidad, 
+            m.nombre, 
+            m.descripcion,
+            m.cantidad,
+            m.buenestado,
+            m.monto,
+            m.fechaactualizado,
+            um.nombre numd, 
+            um.descripcion umd, 
+            um.simbolo FROM materiaprima m
+            
+            join unidadmedida um
+
+            on m.idunidadmedida = um.idunidadmedida");
 
             $stm->execute();
 
             $this->response->setResponse(true);
 
             $this->response->result = $stm->fetchAll();
+
+            foreach($this->response->result as $key=>$value){
+                $value->unidad=array(
+                    "idunidadmedida" => $value->unidad,
+                    "nombre"=>$value->numd,
+                    "descripcion"=>$value->umd,
+                    "simbolo"=>$value->simbolo
+                );
+
+                unset($value->numd);
+                unset($value->umd);
+                unset($value->simbolo);}
 
             return $this->response;
 
@@ -43,13 +69,38 @@ class RawMaterialModel
     {
         try {
             $stm = $this->db->prepare("
-                SELECT * FROM $this->table
+            SELECT m.idmateriaprima,
+            m.idunidadmedida unidad, 
+            m.nombre, 
+            m.descripcion,
+            m.cantidad,
+            m.buenestado,
+            m.monto,
+            m.fechaactualizado,
+            um.nombre numd, 
+            um.descripcion umd, 
+            um.simbolo FROM materiaprima m
+            
+            join unidadmedida um
+
+            on m.idunidadmedida = um.idunidadmedida
                 WHERE idmateriaprima = ?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
 
             $this->response->result = $stm->fetch();
+
+            $this->response->result->unidad= array(
+                "idunidadmedida" => $this->response->result->unidad,
+                "nombre"=>$this->response->result->numd,
+                "descripcion"=>$this->response->result->umd,
+                "simbolo"=>$this->response->result->simbolo
+            );
+
+            unset($this->response->result->numd);
+            unset($this->response->result->umd);
+            unset($this->response->result->simbolo);
 
             return $this->response;
 
