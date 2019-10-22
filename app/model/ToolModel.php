@@ -23,8 +23,22 @@ class ToolModel
         try {
            
                 $stm = $this->db->prepare(
-                    "SELECT * FROM herramienta"
-                    
+                    "SELECT h.idherramienta,
+                    h.idunidadmedida unidad, 
+                    h.marca, 
+                    h.modelo,
+                    h.descripcion,
+                    h.cantidad,
+                    h.buenestado,
+                    h.monto,
+                    h.fechaactualizado,
+                    um.nombre, 
+                    um.descripcion umd, 
+                    um.simbolo  FROM herramienta h
+
+                    join unidadmedida um
+
+                    on h.idunidadmedida = um.idunidadmedida"
                     );
 
                 $stm->execute();  
@@ -32,13 +46,23 @@ class ToolModel
                 $this->response->setResponse(true);
 
             $this->response->result = $stm->fetchAll();
-            
-            return $this->response;  
-            
-            
 
-            
-            
+            foreach($this->response->result as $key=>$value){
+                $value->unidad=array(
+                    "idunidadmedida" => $value->unidad,
+                    "nombre"=>$value->nombre,
+                    "descripcion"=>$value->umd,
+                    "simbolo"=>$value->simbolo
+                );
+
+                unset($value->nombre);
+                unset($value->umd);
+                unset($value->simbolo);
+            }
+
+            return $this->response;       
+        
+  
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
@@ -49,13 +73,43 @@ class ToolModel
     {
         try {
             $stm = $this->db->prepare("
-                SELECT * FROM $this->tooltbl
-                WHERE idherramienta = ?");
+            SELECT h.idherramienta,
+            h.idunidadmedida unidad, 
+            h.marca, 
+            h.modelo,
+            h.descripcion,
+            h.cantidad,
+            h.buenestado,
+            h.monto,
+            h.fechaactualizado,
+            um.nombre, 
+            um.descripcion umd, 
+            um.simbolo 
+            FROM herramienta h
+            
+            join unidadmedida um
+
+            on h.idunidadmedida = um.idunidadmedida
+            where idherramienta = ?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
 
             $this->response->result = $stm->fetch();
+            
+            
+            $this->response->result->unidad= array(
+                    "idunidadmedida" => $this->response->result->unidad,
+                    "nombre"=>$this->response->result->nombre,
+                    "descripcion"=>$this->response->result->umd,
+                    "simbolo"=>$this->response->result->simbolo
+                );
+
+                unset($this->response->result->nombre);
+                unset($this->response->result->umd);
+                unset($this->response->result->simbolo);
+            
+
 
             return $this->response;
 
