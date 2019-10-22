@@ -25,14 +25,49 @@ class ProductionModel
         try {
             //Consulta SQL que ejecutaremos
             //statement = consulta = consulta
-            $stmp = $this->db->prepare(
-                "SELECT *
-                from $this->dbPr
-                "
+            $stmp = $this->db->prepare("SELECT p.idproduccion,
+            p.idunidadmedida unidad,
+            p.lote,
+            p.nombre,
+            p.fechaactualizado,
+            p.descripcion,
+            p.cantidad,
+            p.buenestado,
+            p.preciounitario,
+            p.fechayhoradeproduccion,
+            um.nombre,
+            um.descripcion umd,
+            um.simbolo
+            from produccion p join unidadmedida um
+            on p.idunidadmedida = um.idunidadmedida" 
             );
             $stmp->execute();
+
             $this->response->setResponse(true);
             $this->response->result = $stmp->fetchAll();
+            foreach($this->response->result as $key=>$value){
+                $value->unidad = array(
+                    "idunidadmedida" => $value->unidad,
+                    "nombre" =>$value->nombre,
+                    "descrpcion" =>$value->umd,
+                    "simbolo" =>$value->simbolo
+
+                );
+                unset ($value->numd);
+                unset ($value->descripcion);
+                unset ($value->simbolo);
+            }
+            foreach($this->response->result as $key=>$value){
+                $value->preciounitario = array(
+                    "preciounitario" =>$value->preciounitario,
+                    "fechaactualizado "=>$value->fechaactualizado,
+                    "cantidad "=>$value->cantidad
+                );
+                unset ($value->preciounitario);
+                unset ($value->fechaactualizado);
+                unset ($value->cantidad);
+            }
+
             return $this->response;} catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;}

@@ -21,15 +21,35 @@ class ContainerModel { //Nombre de la clase
             $result = array();
 
             $stm = $this->db->prepare(
-                "SELECT 
-                    *
-                FROM
-                    envase where idenvase = ?");
+            "SELECT e.idenvase,
+                e.idunidadmedida unidad,
+                e.marca,
+                e.modelo,
+                e.descripcion,
+                e.cantidad,
+                e.buenestado,
+                e.monto,
+                e.fechaactualizado,
+                um.nombre,
+                um.descripcion umd,
+                um.simbolo
+                from envase e join unidadmedida um
+                on e.idunidadmedida = um.idunidadmedida    
+                where idenvase = ?");
             
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
             $this->response->result = $stm->fetch();
+            $this->response->result->envase = array (
+                "idunidadmedida" =>$this->response->result->unidad,
+                "nombre" =>$this->response->result->nombre,
+                "descripcion" =>$this->response->result->descripcion,
+                "simbolo" =>$this->response->result->simbolo,
+            );
+            unset($this->response->result->nombre);
+            unset($this->response->result->descripcion);
+            unset($this->response->result->simbolo);
         
             
            
@@ -50,15 +70,37 @@ class ContainerModel { //Nombre de la clase
             $result = array();
 
             $stm = $this->db->prepare(
-                "SELECT 
-                    *
-                FROM
-                    envase" );
+                "SELECT e.idenvase,
+                e.idunidadmedida unidad,
+                e.marca,
+                e.modelo,
+                e.descripcion,
+                e.cantidad,
+                e.buenestado,
+                e.monto,
+                e.fechaactualizado,
+                um.nombre,
+                um.descripcion umd,
+                um.simbolo
+                from envase e join unidadmedida um
+                on e.idunidadmedida = um.idunidadmedida" );
             
             $stm->execute();
 
             $this->response->setResponse(true);
             $this->response->result = $stm->fetchAll();
+            foreach($this->response->result as $key=>$value){
+                $value->unidad = array(
+                    "idunidadmedida" => $value->unidad,
+                    "nombre" =>$value->nombre,
+                    "descrpcion" =>$value->umd,
+                    "simbolo" =>$value->simbolo
+
+                );
+                unset ($value->nombre);
+                unset ($value->descripcion);
+                unset ($value->simbolo);
+            }
         
             
            
