@@ -37,6 +37,7 @@ $app->group('/container', function () {
         );
 
     });
+    //funciona
     $this->post('/', function ($req, $res) {
         $um = new ContainerModel();
 
@@ -54,7 +55,7 @@ $app->group('/container', function () {
                 )
             );
     });
-    
+    //funciona
     $this->put('/', function ($req, $res) {
         $um = new ContainerModel();
 
@@ -72,7 +73,7 @@ $app->group('/container', function () {
                 )
             );
     });
-
+//funciona
     $this->delete('/{id}', function ($req, $res, $args) {
         $um = new ContainerModel();
 

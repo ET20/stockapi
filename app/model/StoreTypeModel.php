@@ -4,7 +4,7 @@ namespace App\Model;
 use App\Lib\Database;
 use App\Lib\Response;
 
-class TypeStoreModel
+class StoreTypeModel
 {
 
     private $db;
@@ -17,44 +17,63 @@ class TypeStoreModel
         $this->response = new Response();
     }
 
-    public function GetAll()
-    {
-        try {
+    public function GetAll() {
+        try 
+        {
+            $result = array();
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table");
-
+            $stm = $this->db->prepare(
+                "SELECT 
+                    *
+                FROM
+                    tipoalmacen" );
+            
             $stm->execute();
 
             $this->response->setResponse(true);
-
             $this->response->result = $stm->fetchAll();
-
+        
+            
+           
             return $this->response;
-
-        } catch (Exception $e) {
+             
+            
+        }
+        catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
         }
-    }
 
-    public function Get($id)
-    {
-        try {
-            $stm = $this->db->prepare("
-                SELECT * FROM $this->table
-                WHERE idtipoalmacen = ?");
+
+    }
+    public function Get($id) {
+        try 
+        {
+            $result = array();
+
+            $stm = $this->db->prepare(
+                "SELECT 
+                    *
+                FROM
+                    tipoalmacen where idtipoalmacen = ?");
+            
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
-
             $this->response->result = $stm->fetch();
-
+        
+            
+           
             return $this->response;
-
-        } catch (Exception $e) {
+             
+            
+        }
+        catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
             return $this->response;
         }
+
+
     }
 
     public function Insert($data)
@@ -78,7 +97,7 @@ class TypeStoreModel
             $this->response->setResponse(false, $e->getMessage());
         }
     }
-
+   
     public function Update($data)
     {
         try {
