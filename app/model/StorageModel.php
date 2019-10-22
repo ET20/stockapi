@@ -17,11 +17,36 @@ class StorageModel{
     public function GetAll() {
         try {
             $stm = $this->db->prepare(
-                "select * from 
-                $this->stro" );
+                "SELECT 
+                a.idalmacen,
+                a.idtipoalmacen tipo,
+                a.ubicacion,
+                a.capacidad,
+                a.nombre,
+                t.descripcion
+                
+                FROM almacen a
+
+                join tipoalmacen t
+
+                on a.idtipoalmacen = t.idtipoalmacen" );
+
             $stm->execute();
+
             $this->response->setResponse(true);
-            $this->response->result = $stm->fetchAll(); 
+
+            $this->response->result = $stm->fetchAll();
+
+            foreach($this->response->result as $key=>$value){
+                $value->tipo=array(
+                    "idtipoalmacen" => $value->tipo,
+                    "descripcion"=>$value->descripcion
+                    
+                );
+
+                unset($value->descripcion);
+            }
+
             return $this->response;
         } catch (Exception $e) {
             $this->response->setResponse(false, $e->getMessage());
@@ -35,13 +60,34 @@ class StorageModel{
         {
            
             $stm = $this->db->prepare(
-                "SELECT * FROM $this->stro
-            WHERE idalmacen = ?");
+                "SELECT 
+                a.idalmacen,
+                a.idtipoalmacen tipo,
+                a.ubicacion,
+                a.capacidad,
+                a.nombre,
+                t.descripcion
+                
+                FROM almacen a
+
+                join tipoalmacen t
+
+                on a.idtipoalmacen = t.idtipoalmacen
+
+                WHERE idalmacen = ?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
 
             $this->response->result = $stm->fetch();            
+    
+            $this->response->result->tipo= array(
+                "idtipoalmacen" => $this->response->result->tipo,
+                "descripcion"=>$this->response->result->descripcion
+                
+            );
+
+            unset($this->response->result->descripcion);
 
             return $this->response;
         } catch (Exception $e) {
