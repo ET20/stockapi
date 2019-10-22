@@ -14,6 +14,7 @@ class UnitMeasurementModel {
         $this->response = new Response();
     }
     
+    /*Get all units of measurement*/
     public function GetAll()
     {
         try {
@@ -41,7 +42,7 @@ class UnitMeasurementModel {
             }
     }
 
-    /**/
+    /*Get an UM by its id*/
     public function Get($id)
     {
         try {
@@ -94,7 +95,7 @@ class UnitMeasurementModel {
             if (isset($data['idunidadmedida'])) {
                 $sql = "UPDATE $this->unitm SET
                             nombre      = ?,
-                            descripcion = ?,                            
+                            descripcion = ?                           
 
                         WHERE idunidadmedida = ?";
 
@@ -118,7 +119,7 @@ class UnitMeasurementModel {
         }
     }
 
-    /*Delete a tools by id*/
+    /*Delete a UM by id*/
     public function Delete($id)
     {
         try

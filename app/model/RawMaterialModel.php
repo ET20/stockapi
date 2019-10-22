@@ -63,18 +63,27 @@ class RawMaterialModel
     public function Insert($data)
     {
         try {
-            $sql = "INSERT INTO $this->table
-                    (nombre, descripcion, cantidad, unidad, buenestado)
-                    VALUES (?,?,?,?,?);";
+            $sql = "INSERT INTO materiaprima
+            (idunidadmedida,
+            nombre, 
+            descripcion, 
+            cantidad, 
+            buenestado,
+            monto,
+            fechaactualizado)
+            VALUES (?,?,?,?,?,?,(select now()));";
 
             $this->db->prepare($sql)
                 ->execute(
                     array(
+                        $data['idunidadmedida'],
                         $data['nombre'],
                         $data['descripcion'],
                         $data['cantidad'],
-                        $data['unidad'],
                         $data['buenestado'],
+                        $data['monto']
+
+                        
                     )
                 );
 
@@ -92,11 +101,13 @@ class RawMaterialModel
         try {
             if (isset($data['idmateriaprima'])) {
                 $sql = "UPDATE $this->table SET
+                            idunidadmedida = ?,
                             nombre      = ?,
                             descripcion = ?,
                             cantidad    = ?,
-                            unidad      = ?,
-                            buenestado  = ?
+                            buenestado  = ?,
+                            monto       = ?,
+                            fechaactualizado = (select now()) 
 
                         WHERE idmateriaprima = ?";
 
@@ -104,11 +115,12 @@ class RawMaterialModel
                 $this->db->prepare($sql)
                     ->execute(
                         array(
+                            $data['idunidadmedida'],
                             $data['nombre'],
                             $data['descripcion'],
-                            $data['cantidad'],
-                            $data['unidad'],
+                            $data['cantidad'],                        
                             $data['buenestado'],
+                            $data['monto'],
                             $idmateriaprima,
                         )
                     );

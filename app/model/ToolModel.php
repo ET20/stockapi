@@ -17,7 +17,7 @@ class ToolModel
         $this->response = new Response();
     }
 
-    /*Get all members */
+    /*Get all tools */
     public function GetAll()
     {
         try {
@@ -44,7 +44,7 @@ class ToolModel
             return $this->response;
             }
     }
-    /**/
+    /*Get a tool depending on its id*/
     public function Get($id)
     {
         try {

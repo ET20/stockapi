@@ -40,8 +40,12 @@ $app->group('/raws', function () {
 
     $this->post('/', function ($req, $res) {
         $um = new RawMaterialModel();
-
-        $res
+  
+        return $res
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+            ->withHeader('Content-type', 'application/json')
             ->getBody()
             ->write(
                 json_encode(
@@ -50,47 +54,43 @@ $app->group('/raws', function () {
                     )
                 )
             );
-
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
     });
-
-    $this->put('/', function ($req, $res) {
-        $um = new RawMaterialModel();
-
-        $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->Update(
-                        $req->getParsedBody()
+    
+        $this->put('/', function ($req, $res) {
+            $um = new RawMaterialModel();
+    
+            return $res
+                ->withHeader('Access-Control-Allow-Origin', '*')
+                ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+                ->withHeader('Content-type', 'application/json')
+                ->getBody()
+                ->write(
+                    json_encode(
+                        $um->Update(
+                            $req->getParsedBody()
+                        )
                     )
-                )
-            );
-
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
+                );
+        });
+    
+        $this->delete('/{id}', function ($req, $res, $args) {
+            $um = new RawMaterialModel();
+    
+            return $res
+                ->withHeader('Access-Control-Allow-Origin', '*')
+                ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+                ->withHeader('Content-type', 'application/json')
+                ->getBody()
+                ->write(
+                    json_encode(
+                        $um->Delete(
+                            $args['id']
+                        )
+                    )
+                );
+    
+        });
     });
-
-    $this->delete('/{id}', function ($req, $res, $args) {
-        $um = new RawMaterialModel();
-
-        $res
-            ->getBody()
-            ->write(
-                json_encode(
-                    $um->Delete($args['id'])
-                )
-            );
-
-        return $res->withHeader(
-            'Content-type',
-            'application/json; charset=utf-8'
-        );
-    });
-
-});
+    
