@@ -222,3 +222,57 @@ class ToolModel
         }
     }
 }
+/*
+SELECT h.idherramienta,
+            h.idunidadmedida unidad, 
+            h.marca, 
+            h.modelo,
+            h.descripcion,
+            h.cantidad,
+            h.buenestado,
+            h.monto,
+            h.fechaactualizado,
+            um.nombre, 
+            um.descripcion umd, 
+            um.simbolo,
+            hm.idherramienta,
+            hm.idalmacen,            
+            hm.idusuario,            
+            hm.idmovimiento,
+            hm.fecha,
+            al.idtipoalmacen,
+            al.ubicacion,
+            al.capacidad,
+            al.nombre,
+            mo.nombre,
+            mo.descripcion,
+            us.idpersona,
+            us.usuario,
+            p.nombre,
+            p.apellido
+            FROM herramienta h
+            
+            join unidadmedida um
+
+            on h.idunidadmedida = um.idunidadmedida
+            
+            join herramientaalmacen hm
+            
+            on h.idherramienta = hm.idherramienta
+            
+            join almacen al
+            
+            on al.idalmacen = hm.idalmacen            
+            
+            join movimiento mo
+            
+            on hm.idmovimiento = mo.idmovimiento  join usuario us
+            
+            on hm.idusuario = us.idusuario  
+			
+            join persona p
+			
+            on us.idusuario = p.idpersona
+            
+            where h.idherramienta = 1
+*/
