@@ -8,7 +8,6 @@ class Response
     public $message = 'Pasaron cosas!';
     public $href = null;
     public $function = null;
-
     public $filter = null;
 
     public function SetResponse($response, $m = '')
