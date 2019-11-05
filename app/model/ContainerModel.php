@@ -21,35 +21,120 @@ class ContainerModel { //Nombre de la clase
             $result = array();
 
             $stm = $this->db->prepare(
-            "SELECT e.idenvase,
-                e.idunidadmedida unidad,
-                e.marca,
+                "SELECT e.idenvase,
+                e.idunidadmedida unidad, 
+                e.marca me, 
                 e.modelo,
-                e.descripcion,
+                e.descripcion hd,
                 e.cantidad,
                 e.buenestado,
                 e.monto,
                 e.fechaactualizado,
-                um.nombre,
-                um.descripcion umd,
-                um.simbolo
-                from envase e join unidadmedida um
-                on e.idunidadmedida = um.idunidadmedida    
-                where idenvase = ?");
+                um.nombre num, 
+                um.descripcion dum, 
+                um.simbolo,
+                ea.idalmacen almacen,                        
+                ea.fecha,
+                ea.idmovimiento,
+                al.idtipoalmacen,
+                al.ubicacion,
+                al.capacidad,
+                al.nombre alm ,
+                mo.nombre mov,
+                mo.descripcion od,
+                p.idpersona persona,
+                us.idusuario usuario,
+                us.usuario sa,
+                p.nombre np,
+                p.apellido
+                
+                FROM envase e
+                
+                join unidadmedida um
+    
+                on e.idunidadmedida = um.idunidadmedida
+                
+                join envasealmacen ea
+                
+                on e.idenvase = ea.idenvase
+                
+                join almacen al
+                
+                on al.idalmacen = ea.idalmacen            
+                
+                join movimiento mo
+                
+                on ea.idmovimiento = mo.idmovimiento  
+                
+                join usuario us
+                
+                on ea.idusuario = us.idusuario  
+                
+                join persona p
+                
+                on us.idusuario = p.idpersona
+                
+                where e.idenvase = ?" );
             
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
+
             $this->response->result = $stm->fetch();
-            $this->response->result->envase = array (
-                "idunidadmedida" =>$this->response->result->unidad,
-                "nombre" =>$this->response->result->nombre,
-                "descripcion" =>$this->response->result->descripcion,
-                "simbolo" =>$this->response->result->simbolo,
-            );
-            unset($this->response->result->nombre);
-            unset($this->response->result->descripcion);
-            unset($this->response->result->simbolo);
+            
+            
+            $this->response->result->unidad= array(
+                    "idunidadmedida" => $this->response->result->unidad,
+                    "nombre"=>$this->response->result->num,
+                    "descripcion"=>$this->response->result->dum,
+                    "simbolo"=>$this->response->result->simbolo
+                );
+                
+                unset($this->response->result->num);
+                unset($this->response->result->dum);
+                unset($this->response->result->simbolo);
+                
+            $this->response->result->almacen= array(
+                    "idalmacen" => $this->response->result->almacen,
+                  /*  "marca"=> $this->response->result->me,*/
+                    "idtipoalmacen"=>$this->response->result->idtipoalmacen,
+                    "ubicacion"=>$this->response->result->ubicacion,
+                    "capacidad"=>$this->response->result->capacidad,
+                    "nombre"=>$this->response->result->alm
+                );
+                unset($this->response->result->ubicacion);
+                unset($this->response->result->capacidad);
+                unset($this->response->result->alm);
+                unset($this->response->result->me);
+                unset($this->response->result->idtipoalmacen);
+
+            /* $this->response->result->movimiento= array(
+                    "idmovimiento"=>$this->response->result->movimiento,
+                    "nombre"=>$this->response->result->mov,
+                    "descripcion"=>$this->response->result->od,
+                    "fecha"=>$this->response->result->fecha);*/
+
+                    unset($this->response->result->mov);
+                    unset($this->response->result->od);
+                    unset($this->response->result->fecha);
+
+
+
+                   /* $this->response->result->usuario= array(
+                    "idusuario"=>$this->response->result->usuario,
+                    "usuario"=>$this ->response->result->sa);*/
+
+                    unset($this->response->result->sa);
+
+
+                    /*$this->response->result->persona= array(
+                    "idpersona"=>$this->response->result->persona,
+                    "nombre"=>$this->response->result->np,
+                    "apellido"=>$this->response->result->apellido);*/
+                                     
+                    
+                    unset($this->response->result->apellido);
+                    unset($this->response->result->np);
         
             
            
