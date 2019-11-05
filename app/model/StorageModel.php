@@ -8,7 +8,7 @@ class StorageModel{
     private $db;
     private $stro = 'almacen';
     private $ta = "tipoalmacen";
-        private $response;  
+    private $response;  
 
     public function __CONSTRUCT() {
         $this->db = Database::StartUp();
