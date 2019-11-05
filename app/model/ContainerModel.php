@@ -134,7 +134,7 @@ class ContainerModel { //Nombre de la clase
                                      
                     
                     unset($this->response->result->apellido);
-                    unset($this->response->result->np);
+                    unset($this->response->result->np);  }
         
             
            
