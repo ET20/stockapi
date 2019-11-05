@@ -6,9 +6,9 @@ class Response
     public $result = null;
     public $response = false;
     public $message = 'Pasaron cosas!';
-    public $href = null;
-    public $filter = null;
-    public $function = null;
+    //public $href = null;
+    //public $filter = null;
+    //public $function = null;
     
 
     public function SetResponse($response, $m = '')
