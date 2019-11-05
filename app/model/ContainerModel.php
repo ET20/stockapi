@@ -82,7 +82,7 @@ class ContainerModel { //Nombre de la clase
 
             $this->response->result = $stm->fetch();
             
-            
+            if($this->response->result!=null){
             $this->response->result->unidad= array(
                     "idunidadmedida" => $this->response->result->unidad,
                     "nombre"=>$this->response->result->num,
