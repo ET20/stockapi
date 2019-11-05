@@ -77,20 +77,58 @@ class ToolModel
             h.idunidadmedida unidad, 
             h.marca, 
             h.modelo,
+            h.nombre hn,
             h.descripcion,
             h.cantidad,
             h.buenestado,
             h.monto,
             h.fechaactualizado,
-            um.nombre, 
+            um.nombre nmd, 
             um.descripcion umd, 
-            um.simbolo 
+            um.simbolo,
+            hm.idalmacen almacen,                        
+            hm.idmovimiento movimiento,
+            hm.fecha,
+            al.idtipoalmacen,
+            al.ubicacion,
+            al.capacidad,
+            al.nombre alm ,
+            mo.nombre mov,
+            mo.descripcion od,
+            p.idpersona persona,
+            us.idusuario usuario,
+            us.usuario sa,
+            p.nombre np,
+            p.apellido
+            
             FROM herramienta h
             
             join unidadmedida um
 
             on h.idunidadmedida = um.idunidadmedida
-            where idherramienta = ?");
+            
+            join herramientaalmacen hm
+            
+            on h.idherramienta = hm.idherramienta
+            
+            join almacen al
+            
+            on al.idalmacen = hm.idalmacen            
+            
+            join movimiento mo
+            
+            on hm.idmovimiento = mo.idmovimiento  
+            
+            join usuario us
+            
+            on hm.idusuario = us.idusuario  
+			
+            join persona p
+			
+            on us.idusuario = p.idpersona
+            
+            where h.idherramienta = ?");
+
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
@@ -100,16 +138,66 @@ class ToolModel
             
             $this->response->result->unidad= array(
                     "idunidadmedida" => $this->response->result->unidad,
-                    "nombre"=>$this->response->result->nombre,
+                    "nombre"=>$this->response->result->nmd,
                     "descripcion"=>$this->response->result->umd,
                     "simbolo"=>$this->response->result->simbolo
                 );
 
                 unset($this->response->result->nombre);
                 unset($this->response->result->umd);
+                unset($this->response->result->nmd);
                 unset($this->response->result->simbolo);
-            
 
+                $this->response->result->almacen= array(
+                    "idalmacen" => $this->response->result->almacen,
+                    "nombre"=> $this->response->result->hn,
+                    "idtipoalmacen"=>$this->response->result->idtipoalmacen,
+                    "ubicacion"=>$this->response->result->ubicacion,
+                    "capacidad"=>$this->response->result->capacidad,
+                    "nombre"=>$this->response->result->alm);
+
+                unset($this->response->result->ubicacion);
+                unset($this->response->result->capacidad);
+                unset($this->response->result->alm);
+                unset($this->response->result->hn);
+                unset($this->response->result->idtipoalmacen);
+
+                
+              
+
+                   /* $this->response->result->movimiento= array(
+                    "idmovimiento"=>$this->response->result->movimiento,
+                    "nombre"=>$this->response->result->mov,
+                    "descripcion"=>$this->response->result->od,
+                    "fecha"=>$this->response->result->fecha);*/
+
+                    unset($this->response->result->mov);
+                    unset($this->response->result->od);
+                    unset($this->response->result->fecha);
+
+
+
+                   /* $this->response->result->usuario= array(
+                    "idusuario"=>$this->response->result->usuario,
+                    "usuario"=>$this ->response->result->sa);*/
+
+                    unset($this->response->result->sa);
+
+
+                    /*$this->response->result->persona= array(
+                    "idpersona"=>$this->response->result->persona,
+                    "nombre"=>$this->response->result->np,
+                    "apellido"=>$this->response->result->apellido);*/
+                                     
+                    
+                    unset($this->response->result->apellido);
+                    unset($this->response->result->np);
+                    
+               
+
+                                         
+            
+                
 
             return $this->response;
 
@@ -222,57 +310,3 @@ class ToolModel
         }
     }
 }
-/*
-SELECT h.idherramienta,
-            h.idunidadmedida unidad, 
-            h.marca, 
-            h.modelo,
-            h.descripcion,
-            h.cantidad,
-            h.buenestado,
-            h.monto,
-            h.fechaactualizado,
-            um.nombre, 
-            um.descripcion umd, 
-            um.simbolo,
-            hm.idherramienta,
-            hm.idalmacen,            
-            hm.idusuario,            
-            hm.idmovimiento,
-            hm.fecha,
-            al.idtipoalmacen,
-            al.ubicacion,
-            al.capacidad,
-            al.nombre,
-            mo.nombre,
-            mo.descripcion,
-            us.idpersona,
-            us.usuario,
-            p.nombre,
-            p.apellido
-            FROM herramienta h
-            
-            join unidadmedida um
-
-            on h.idunidadmedida = um.idunidadmedida
-            
-            join herramientaalmacen hm
-            
-            on h.idherramienta = hm.idherramienta
-            
-            join almacen al
-            
-            on al.idalmacen = hm.idalmacen            
-            
-            join movimiento mo
-            
-            on hm.idmovimiento = mo.idmovimiento  join usuario us
-            
-            on hm.idusuario = us.idusuario  
-			
-            join persona p
-			
-            on us.idusuario = p.idpersona
-            
-            where h.idherramienta = 1
-*/

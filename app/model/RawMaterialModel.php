@@ -70,8 +70,8 @@ class RawMaterialModel
         try {
             $stm = $this->db->prepare("
             SELECT m.idmateriaprima,
-            m.idunidadmedida unidad, 
-            m.nombre, 
+            m.idunidadmedida unidad,
+            m.nombre hn,
             m.descripcion,
             m.cantidad,
             m.buenestado,
@@ -79,12 +79,49 @@ class RawMaterialModel
             m.fechaactualizado,
             um.nombre numd, 
             um.descripcion umd, 
-            um.simbolo FROM materiaprima m
+            um.simbolo,
+            am.idalmacen almacen,                        
+            am.idmovimiento movimiento,
+            am.fecha,
+            al.idtipoalmacen,
+            al.ubicacion,
+            al.capacidad,
+            al.nombre alm ,
+            mo.nombre mov,
+            mo.descripcion od,
+            p.idpersona persona,
+            us.idusuario usuario,
+            us.usuario sa,
+            p.nombre np,
+            p.apellido
+            
+            FROM materiaprima m
             
             join unidadmedida um
 
             on m.idunidadmedida = um.idunidadmedida
-                WHERE idmateriaprima = ?");
+            
+            join materiaprimaalmacen am
+            
+            on m.idmateriaprima = am.idmateriaprima
+            
+            join almacen al
+            
+            on al.idalmacen = am.idalmacen            
+            
+            join movimiento mo
+            
+            on am.idmovimiento = mo.idmovimiento  
+            
+            join usuario us
+            
+            on am.idusuario = us.idusuario  
+			
+            join persona p
+			
+            on us.idusuario = p.idpersona
+            
+            where m.idmateriaprima =?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
@@ -102,6 +139,28 @@ class RawMaterialModel
             unset($this->response->result->umd);
             unset($this->response->result->simbolo);
 
+            $this->response->result->almacen= array(
+                "idalmacen" => $this->response->result->almacen,
+                "nombre"=> $this->response->result->hn,
+                "idtipoalmacen"=>$this->response->result->idtipoalmacen,
+                "ubicacion"=>$this->response->result->ubicacion,
+                "capacidad"=>$this->response->result->capacidad,
+                "nombre"=>$this->response->result->alm);
+
+            unset($this->response->result->ubicacion);
+            unset($this->response->result->capacidad);
+            unset($this->response->result->alm);
+            unset($this->response->result->hn);
+            unset($this->response->result->idtipoalmacen);
+
+            unset($this->response->result->mov);
+                    unset($this->response->result->od);
+                    unset($this->response->result->fecha);
+
+                    unset($this->response->result->sa);
+
+                    unset($this->response->result->apellido);
+                    unset($this->response->result->np);
             return $this->response;
 
         } catch (Exception $e) {
