@@ -134,8 +134,7 @@ class ToolModel
             $this->response->setResponse(true);
 
             $this->response->result = $stm->fetch();
-            
-            
+            if($this->response->result!=null){
             $this->response->result->unidad= array(
                     "idunidadmedida" => $this->response->result->unidad,
                     "nombre"=>$this->response->result->nmd,
@@ -191,14 +190,13 @@ class ToolModel
                                      
                     
                     unset($this->response->result->apellido);
-                    unset($this->response->result->np);
-                    
-               
-
-                                         
+                    unset($this->response->result->np);                                                        
             
                 
 
+            
+            }
+            
             return $this->response;
 
         } catch (Exception $e) {
