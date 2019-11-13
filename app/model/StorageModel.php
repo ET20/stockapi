@@ -66,15 +66,37 @@ class StorageModel{
                 a.ubicacion,
                 a.capacidad,
                 a.nombre,
-                t.descripcion
+                t.descripcion,
+                hm.idherramienta,                       
+				hm.fecha,
+				h.idunidadmedida, 
+				h.marca, 
+				h.modelo,
+				h.nombre hn,
+				h.descripcion,
+				h.cantidad,
+				h.buenestado,
+				h.monto,
+                hm.idmovimiento
+                
                 
                 FROM almacen a
 
                 join tipoalmacen t
 
                 on a.idtipoalmacen = t.idtipoalmacen
-
-                WHERE idalmacen = ?");
+                
+                join herramientaalmacen hm
+                
+                on a.idalmacen = hm.idalmacen
+                
+                join herramienta h
+				
+                on hm.idherramienta = h.idherramienta
+                
+                
+                
+                WHERE a.idalmacen =?");
             $stm->execute(array($id));
 
             $this->response->setResponse(true);
@@ -169,3 +191,43 @@ class StorageModel{
     }
     
 }
+/*SELECT 
+                a.idalmacen,
+                a.idtipoalmacen tipo,
+                a.ubicacion,
+                a.capacidad,
+                a.nombre,
+                t.descripcion,
+                hm.idherramienta,                        
+				hm.idmovimiento,
+				hm.fecha,
+				h.idunidadmedida, 
+				h.marca, 
+				h.modelo,
+				h.nombre hn,
+				h.descripcion,
+				h.cantidad,
+				h.buenestado,
+				h.monto,
+                mo.idmovimiento
+                
+                
+                FROM almacen a
+
+                join tipoalmacen t
+
+                on a.idtipoalmacen = t.idtipoalmacen
+                
+                join herramientaalmacen hm
+                
+                on a.idalmacen = hm.idalmacen
+                
+                join herramienta h
+				
+                on hm.idherramienta = h.idherramienta
+                
+                JOIN movimiento mo
+                
+                on mo.idmovimiento = hm.movimiento
+                
+                WHERE a.idalmacen = 9*/
